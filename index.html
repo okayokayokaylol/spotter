@@ -1,0 +1,3378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<title>Tally</title>
+
+<!-- PWA / Home Screen install -->
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Tally"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#0a0a0a"/>
+
+<!-- SVG icon (modern browsers, iOS 13+ Safari) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzBhMGEwYSIvPgogIDxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjQyIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjIwIiB4Mj0iOTAiIHkyPSI1NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjEyNSIgeDI9IjkwIiB5Mj0iMTYwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iOTAiIHgyPSI1NSIgeTI9IjkwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjEyNSIgeTE9IjkwIiB4Mj0iMTYwIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI2IiBmaWxsPSIjNGFkZTgwIi8+Cjwvc3ZnPgo="/>
+
+<!-- Apple touch icon (iOS adds-to-homescreen). PNG injected at runtime via canvas
+     for maximum iOS compatibility; the SVG above is a fallback. -->
+<link id="apple-touch-icon" rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzBhMGEwYSIvPgogIDxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjQyIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjIwIiB4Mj0iOTAiIHkyPSI1NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjEyNSIgeDI9IjkwIiB5Mj0iMTYwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iOTAiIHgyPSI1NSIgeTI9IjkwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjEyNSIgeTE9IjkwIiB4Mj0iMTYwIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI2IiBmaWxsPSIjNGFkZTgwIi8+Cjwvc3ZnPgo="/>
+
+<!-- Web app manifest (Android / Chrome PWA install) -->
+<link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Tally%22%2C%22short_name%22%3A%22Tally%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0a0a%22%2C%22theme_color%22%3A%22%230a0a0a%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCI%2BCiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzBhMGEwYSIvPgogIDxjaXJjbGUgY3g9IjkwIiBjeT0iOTAiIHI9IjQyIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjIwIiB4Mj0iOTAiIHkyPSI1NSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSI5MCIgeTE9IjEyNSIgeDI9IjkwIiB5Mj0iMTYwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iOTAiIHgyPSI1NSIgeTI9IjkwIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjEyNSIgeTE9IjkwIiB4Mj0iMTYwIiB5Mj0iOTAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSI5MCIgY3k9IjkwIiByPSI2IiBmaWxsPSIjNGFkZTgwIi8%2BCjwvc3ZnPg%3D%3D%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%22%7D%5D%7D"/>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0a0a0a; color: #f0f0f0;
+  /* Kill double-tap zoom on the whole page. Leaflet overrides this inside the map. */
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+/* Safe-area padding for PWA / Home-Screen install (notch top, home-indicator bottom) */
+#shell {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  /* Bottom safe-area is handled by #tabbar so it visually merges with the home indicator */
+}
+/* Allow Leaflet to receive pinch-zoom gestures inside the map */
+#leaflet-map, #leaflet-map * { touch-action: none; }
+#shell {
+  display: flex; flex-direction: column;
+  height: 100dvh; max-width: 480px;
+  margin: 0 auto; overflow: hidden;
+}
+#topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px 8px; flex-shrink: 0;
+}
+#topbar h1 {
+  font-size: 15px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #888;
+}
+.version-badge {
+  font-size: 11px; font-weight: 600; background: #1a1a1a;
+  border: 1px solid #333; color: #555; padding: 3px 10px;
+  border-radius: 20px; letter-spacing: 0.06em;
+}
+.topbar-right {
+  display: flex; align-items: center; gap: 10px;
+}
+#settings-btn {
+  background: transparent; border: none; padding: 4px;
+  color: #666; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; transition: color 0.15s;
+}
+#settings-btn:active { color: #aaa; }
+
+/* SETTINGS MODAL */
+#settings-modal {
+  position: fixed; inset: 0; z-index: 300;
+  background: #0a0a0a;
+  display: none; flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+#settings-modal.open { display: flex; }
+#settings-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid #1a1a1a;
+  flex-shrink: 0;
+}
+#settings-header h2 {
+  font-size: 17px; font-weight: 600; color: #fff;
+  letter-spacing: 0.04em;
+}
+#settings-close {
+  background: none; border: none; color: #888;
+  font-size: 16px; font-weight: 500; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; padding: 6px 4px;
+}
+#settings-body {
+  flex: 1; overflow-y: auto; padding: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.settings-section {
+  margin-bottom: 24px;
+}
+.settings-section-title {
+  font-size: 11px; font-weight: 700; color: #555;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0 4px 8px; border-bottom: 1px solid #1a1a1a;
+  margin-bottom: 4px;
+}
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 4px; border-bottom: 1px solid #141414;
+  gap: 12px;
+}
+.settings-row:last-child { border-bottom: none; }
+.settings-row-label {
+  font-size: 14px; color: #ddd; flex: 1; min-width: 0;
+}
+.settings-row-sub {
+  font-size: 11px; color: #555; margin-top: 2px;
+}
+/* iOS-style toggle switch */
+.settings-toggle {
+  flex-shrink: 0; width: 46px; height: 28px;
+  background: #222; border-radius: 14px; position: relative;
+  cursor: pointer; transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  border: none; padding: 0;
+}
+.settings-toggle::after {
+  content: ''; position: absolute;
+  top: 2px; left: 2px; width: 24px; height: 24px;
+  background: #fff; border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+.settings-toggle.on { background: #2a5a2a; }
+.settings-toggle.on::after { transform: translateX(18px); background: #4ade80; }
+/* Slider row */
+.settings-slider-row {
+  display: flex; flex-direction: column;
+  padding: 14px 4px; border-bottom: 1px solid #141414;
+  gap: 8px;
+}
+.settings-slider-row:last-child { border-bottom: none; }
+.settings-slider-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.settings-slider-header .settings-row-label { font-size: 14px; color: #ddd; }
+.settings-slider-value {
+  font-size: 13px; color: #4ade80; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.settings-slider {
+  width: 100%; -webkit-appearance: none; appearance: none;
+  height: 4px; background: #222; border-radius: 2px; outline: none;
+}
+.settings-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; cursor: pointer; border: 2px solid #4ade80;
+}
+.settings-slider::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; cursor: pointer; border: 2px solid #4ade80;
+}
+.settings-btn {
+  width: 100%; padding: 14px; font-size: 14px; font-weight: 600;
+  border-radius: 10px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: 10px; border: 1px solid;
+}
+.settings-btn.danger { background: #1a1010; color: #c44; border-color: #3a1a1a; }
+.settings-btn.warn   { background: #1a1510; color: #c87a3a; border-color: #3a2a1a; }
+.settings-about {
+  font-size: 12px; color: #555; line-height: 1.6;
+  padding: 8px 4px;
+}
+.settings-about a { color: #4ade80; text-decoration: none; }
+.settings-about strong { color: #aaa; font-weight: 600; }
+.settings-restore-row {
+  text-align: center; padding-top: 16px; padding-bottom: 8px;
+}
+.settings-restore-link {
+  font-size: 12px; color: #666; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: underline; background: none; border: none;
+}
+#content { flex: 1; overflow: hidden; position: relative; }
+.tab-view { display: none; height: 100%; overflow: hidden; }
+.tab-view.active { display: flex; flex-direction: column; }
+
+/* VIEWFINDER */
+#viewfinder { flex: 1; position: relative; overflow: hidden; background: #000; }
+#camera-feed { width: 100%; height: 100%; object-fit: cover; display: block; }
+#no-camera {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; color: #444; gap: 10px; font-size: 14px;
+}
+#start-overlay {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px; background: rgba(0,0,0,0.45);
+}
+#start-btn {
+  padding: 16px 48px; font-size: 17px; font-weight: 600;
+  border-radius: 14px; background: #fff; color: #000; border: none;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+#start-btn:active { opacity: 0.85; transform: scale(0.97); }
+#start-hint { font-size: 12px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+
+/* OVERHEAD BAR */
+#overhead-bar {
+  position: absolute; top: 12px; left: 12px; right: 12px;
+  background: rgba(0,0,0,0.75); border-radius: 10px;
+  padding: 8px 14px; font-size: 13px; color: #ddd;
+  display: none; flex-direction: column; gap: 2px;
+}
+#overhead-bar.visible { display: flex; }
+#overhead-count { font-weight: 700; color: #fff; }
+#last-scanned { font-size: 10px; color: #555; }
+
+/* COMPASS OVERLAY */
+#compass-overlay {
+  position: absolute; inset: 0; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+}
+#compass-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* CROSSHAIR */
+#crosshair {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center; pointer-events: none;
+}
+
+/* GPS BADGE */
+#gps-badge {
+  position: absolute; bottom: 96px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.65); color: #666; font-size: 11px;
+  padding: 4px 12px; border-radius: 20px; white-space: nowrap; display: none;
+}
+#gps-badge.visible { display: block; }
+
+/* ZOOM BADGE */
+#zoom-badge {
+  position: absolute; top: 60px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.7); color: #fff; font-size: 13px; font-weight: 700;
+  padding: 5px 12px; border-radius: 14px; letter-spacing: 0.02em;
+  display: none; pointer-events: none;
+}
+#zoom-badge.visible { display: block; }
+
+/* COMPASS BTN */
+#compass-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(0,0,0,0.7); border: 1px solid #333;
+  color: #aaa; font-size: 11px; font-weight: 600;
+  padding: 5px 12px; border-radius: 20px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0.04em; display: none;
+}
+#compass-btn.show { display: block; }
+#compass-btn.active { color: #4ade80; border-color: #2a5a2a; }
+
+/* CATCH BTN */
+#catch-btn {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: 3px solid rgba(255,255,255,0.9);
+  cursor: pointer; display: none;
+  align-items: center; justify-content: center;
+  transition: transform 0.1s, background 0.1s; -webkit-tap-highlight-color: transparent;
+}
+#catch-btn.ready { display: flex; }
+#catch-btn:active { transform: translateX(-50%) scale(0.91); background: rgba(255,255,255,0.28); }
+#catch-btn.cooldown { border-color: rgba(255,255,255,0.2); pointer-events: none; }
+#catch-btn-inner { width: 54px; height: 54px; border-radius: 50%; background: #fff; transition: background 0.2s; }
+#catch-btn.cooldown #catch-btn-inner { background: #444; }
+
+/* STATUS */
+#spot-status {
+  padding: 9px 16px; font-size: 13px; color: #666;
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0; background: #0a0a0a;
+  border-top: 1px solid #141414; min-height: 40px;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #333; flex-shrink: 0; }
+.dot.green  { background: #4ade80; animation: pulse 2s infinite; }
+.dot.yellow { background: #facc15; animation: pulse 2s infinite; }
+.dot.blue   { background: #60a5fa; animation: pulse 2s infinite; }
+.dot.red    { background: #f87171; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* DUPLICATE MODAL */
+#dup-modal {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.85);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+#dup-modal.open { display: flex; }
+#dup-box {
+  background: #1a1a1a; border: 1px solid #333;
+  border-radius: 18px; padding: 24px; width: 100%; max-width: 360px;
+}
+#dup-box h3 { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+#dup-box p { font-size: 13px; color: #777; margin-bottom: 20px; line-height: 1.5; }
+#dup-actions { display: flex; gap: 10px; }
+.btn-dup-again {
+  flex: 1; padding: 13px; font-size: 14px; font-weight: 600;
+  border-radius: 12px; background: #1a3a1a; color: #4ade80;
+  border: 1px solid #2a5a2a; cursor: pointer;
+}
+.btn-dup-dismiss {
+  flex: 1; padding: 13px; font-size: 14px; font-weight: 600;
+  border-radius: 12px; background: #1a1a1a; color: #555;
+  border: 1px solid #242424; cursor: pointer;
+}
+
+/* CARD STYLES (reused by confirm modal + log expand) */
+.empty-state {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #333; font-size: 14px; gap: 10px; text-align: center; padding: 40px;
+}
+.empty-state svg { opacity: 0.15; }
+.verify-card {
+  background: #161616; border: 1px solid #242424;
+  border-radius: 16px; overflow: hidden; animation: slideIn 0.25s ease;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.aircraft-photo {
+  width: 100%; height: 160px; object-fit: cover;
+  display: block; background: #111;
+}
+.aircraft-photo-placeholder {
+  width: 100%; height: 100px;
+  background: #111; display: flex; align-items: center; justify-content: center;
+  color: #333; font-size: 12px;
+}
+.photo-credit {
+  font-size: 10px; color: #444; padding: 4px 14px;
+  background: #0e0e0e; border-bottom: 1px solid #1c1c1c;
+}
+.verify-inner { padding: 16px 18px; display: flex; flex-direction: column; gap: 0; }
+.verify-callsign { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: 0.04em; margin-bottom: 2px; }
+.verify-subtitle { font-size: 12px; color: #555; margin-bottom: 14px; }
+.card-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; padding: 6px 0; border-bottom: 1px solid #1c1c1c;
+}
+.card-row:last-child { border-bottom: none; }
+.card-label { color: #555; }
+.card-value { font-weight: 500; color: #ccc; text-align: right; max-width: 65%; }
+.card-value a { color: #60a5fa; text-decoration: none; }
+.card-value a:active { opacity: 0.7; }
+.confidence-bar {
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.conf-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.conf-dot.high{background:#4ade80} .conf-dot.medium{background:#facc15} .conf-dot.low{background:#f87171}
+.conf-label { font-size: 13px; color: #666; line-height: 1.5; }
+.conf-label strong { color: #bbb; display: block; }
+.verify-actions { display: flex; gap: 10px; }
+.btn-confirm {
+  flex: 1; padding: 14px; font-size: 15px; font-weight: 600;
+  border-radius: 12px; background: #1a3a1a; color: #4ade80;
+  border: 1px solid #2a5a2a; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.btn-confirm:active { opacity: 0.8; }
+.btn-dismiss {
+  flex: 1; padding: 14px; font-size: 15px; font-weight: 600;
+  border-radius: 12px; background: #1a1a1a; color: #555;
+  border: 1px solid #242424; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.btn-dismiss:active { opacity: 0.8; }
+
+/* NEARBY */
+#nearby-header {
+  padding: 12px 16px 8px; display: flex; justify-content: space-between;
+  align-items: center; flex-shrink: 0;
+}
+#nearby-title { font-size: 13px; color: #888; letter-spacing: 0.04em; }
+#nearby-count { font-size: 12px; color: #666; }
+#nearby-view {
+  flex: 1; overflow-y: auto; padding: 8px 16px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.nearby-card {
+  background: #161616; border: 1px solid #242424;
+  border-radius: 12px; padding: 12px 14px; display: flex;
+  align-items: center; gap: 12px;
+}
+.nearby-card.catchable { border-color: #2a5a2a; }
+.nearby-card.grounded { opacity: 0.7; }
+.nearby-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nearby-icon.catchable { background: rgba(74,222,128,0.15); }
+.nearby-icon.high { background: rgba(250,204,21,0.12); }
+.nearby-icon.grounded { background: rgba(140,140,140,0.15); }
+.nearby-info { flex: 1; min-width: 0; }
+.nearby-callsign {
+  font-size: 16px; font-weight: 700; color: #fff;
+  letter-spacing: 0.04em;
+}
+.nearby-meta {
+  font-size: 11px; color: #666; margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nearby-stats {
+  text-align: right; flex-shrink: 0; font-size: 11px;
+  color: #888; line-height: 1.4;
+}
+.nearby-stats strong { color: #fff; font-weight: 600; font-size: 13px; }
+
+/* CONFIRM MODAL (replaces Verify tab) */
+#confirm-modal {
+  position: fixed; inset: 0; z-index: 250;
+  background: rgba(0,0,0,0.85);
+  display: none; align-items: flex-end; justify-content: center;
+  padding: 16px;
+}
+#confirm-modal.open { display: flex; }
+@media (min-width: 480px){ #confirm-modal { align-items: center; } }
+#confirm-sheet {
+  background: #0e0e0e; border: 1px solid #242424;
+  border-radius: 18px; padding: 16px;
+  width: 100%; max-width: 420px; max-height: 92dvh;
+  overflow-y: auto;
+  animation: slideUp 0.22s ease;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+#confirm-sheet .verify-card { margin-bottom: 12px; }
+#confirm-sheet .confidence-bar { margin-bottom: 12px; }
+
+/* LOG */
+#log-view {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px 120px; /* extra bottom space so expanded cards clear the tab bar */
+  display: flex; flex-direction: column; gap: 10px;
+}
+.log-card {
+  background: #161616; border: 1px solid #242424; border-radius: 14px;
+  /* No overflow clipping at the card level — the swipe layer covers the delete
+     background when at rest, and we want the expanded section to grow naturally. */
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.15s;
+  position: relative;
+  touch-action: pan-y;
+}
+.log-card-swipe {
+  position: relative;
+  background: #161616;
+  border-radius: 14px;
+  overflow: hidden; /* clips photos and expand content to the card's rounded shape */
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+.log-card-swipe.dragging { transition: none; }
+.log-card-delete {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 80px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  background: #5a1a1a; color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+}
+.log-card-delete svg { margin-bottom: 4px; }
+.log-card-delete-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.log-card:active { opacity: 0.85; }
+.log-card.expanded { border-color: #3a3a3a; }
+.log-thumb { width: 100%; height: 100px; object-fit: cover; display: block; background: #111; }
+.log-card.expanded .log-thumb { height: 200px; }
+.log-body { padding: 12px 16px; }
+.log-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.log-callsign { font-size: 18px; font-weight: 600; color: #fff; letter-spacing: 0.04em; }
+.log-time { font-size: 11px; color: #444; }
+.log-meta { font-size: 12px; color: #555; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.conf-pill { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.04em; }
+.conf-pill.high{background:#1a3a1a;color:#4ade80}
+.conf-pill.medium{background:#3a3010;color:#facc15}
+.conf-pill.low{background:#3a1a1a;color:#f87171}
+.mil-pill {
+  font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+  letter-spacing: 0.06em; background: #2a2f1a; color: #b8c474;
+  border: 1px solid #3a4220; text-transform: uppercase;
+}
+.mil-pill.airframe-only {
+  background: #1f1f17; color: #6e7350; border-color: #2a2a1c;
+}
+.mil-pill-lg {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 12px; letter-spacing: 0.08em;
+  background: #2a2f1a; color: #b8c474; border: 1px solid #3a4220;
+  text-transform: uppercase; margin-left: 8px; vertical-align: middle;
+}
+.mil-pill-lg.airframe-only {
+  background: #1f1f17; color: #6e7350; border-color: #2a2a1c;
+}
+.log-expand {
+  border-top: 1px solid #1c1c1c;
+  padding: 14px 16px 4px;
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+.log-card.expanded .log-expand {
+  display: block;
+  /* Let the expanded content grow naturally; #log-view scrolls to reveal it.
+     Add bottom padding so the last row clears the tab bar comfortably. */
+  padding-bottom: 24px;
+}
+.log-card.expanded { border-color: #3a3a3a; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.log-links {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 10px 0 14px;
+}
+.log-link {
+  font-size: 11px; padding: 6px 10px;
+  background: #0e1a2a; color: #60a5fa;
+  border: 1px solid #1e3a5a; border-radius: 8px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.log-link:active { opacity: 0.7; }
+.log-actions {
+  display: flex; gap: 8px; padding-bottom: 4px;
+}
+.first-badge {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.08em;
+  padding: 2px 6px; border-radius: 8px;
+  background: #1a3a1a; color: #4ade80; border: 1px solid #2a5a2a;
+  vertical-align: middle;
+}
+.log-reference-photo-wrap {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #1c1c1c;
+}
+.log-ref-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  color: #555; margin-bottom: 6px;
+}
+.log-ref-photo {
+  width: 100%; max-height: 220px; object-fit: cover;
+  border-radius: 8px; display: block; background: #0e0e0e;
+}
+.log-ref-credit {
+  font-size: 10px; color: #444; margin-top: 4px;
+}
+.log-action-btn {
+  flex: 1; padding: 10px; font-size: 12px; font-weight: 600;
+  border-radius: 8px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  background: #1a1a1a; color: #888; border: 1px solid #242424;
+}
+.log-action-btn.danger { color: #c44; border-color: #3a1a1a; }
+.log-action-btn:active { opacity: 0.7; }
+#log-clear-btn {
+  flex-shrink: 0; padding: 12px; font-size: 13px; font-weight: 600;
+  border-radius: 10px; background: #1a1a1a; color: #c44;
+  border: 1px solid #3a1a1a; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  margin-top: 4px; margin-bottom: 8px;
+}
+
+/* SKY MAP */
+#map-view {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden; background: #0a0a0a;
+}
+#map-header {
+  padding: 12px 16px 8px; display: flex; justify-content: space-between;
+  align-items: center; flex-shrink: 0; gap: 10px;
+}
+#map-title { font-size: 13px; color: #888; letter-spacing: 0.04em; }
+#map-header-right {
+  display: flex; align-items: center; gap: 8px;
+}
+#map-count { font-size: 12px; color: #666; }
+#map-count strong { color: #4ade80; font-weight: 700; }
+#map-refresh-btn {
+  background: #1a1a1a; border: 1px solid #2a2a2a;
+  color: #aaa; font-size: 12px; padding: 4px 10px;
+  border-radius: 14px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex; align-items: center; gap: 4px;
+}
+#map-refresh-btn:active { opacity: 0.7; }
+#map-refresh-btn.refreshing { color: #60a5fa; border-color: #2a3a5a; }
+#map-refresh-btn.refreshing svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#map-timestamp { font-size: 10px; color: #444; }
+#map-canvas-wrap {
+  flex: 1; position: relative; overflow: hidden;
+}
+#leaflet-map {
+  position: absolute; inset: 0;
+  background: #0a0a0a;
+}
+#map-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 400;
+}
+/* Hide Leaflet's default attribution flag — we'll add our own minimal credit */
+.leaflet-control-attribution {
+  background: rgba(0,0,0,0.6) !important;
+  color: #555 !important;
+  font-size: 9px !important;
+  padding: 2px 6px !important;
+}
+.leaflet-control-attribution a { color: #888 !important; }
+.leaflet-control-zoom { display: none !important; }
+#map-legend {
+  padding: 10px 16px 14px; display: flex; gap: 16px;
+  font-size: 11px; color: #555; border-top: 1px solid #141414;
+  flex-shrink: 0; justify-content: center;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.legend-dot.catchable { background: #4ade80; }
+.legend-dot.high { background: #facc15; opacity: 0.6; }
+.legend-dot.grounded { background: #888; opacity: 0.7; }
+.legend-dot.user { background: #60a5fa; border: 1px solid #fff; }
+#map-empty {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: #333; font-size: 13px; text-align: center;
+  pointer-events: none;
+}
+#map-compass-hint {
+  padding: 12px 16px; font-size: 12px; color: #666;
+  text-align: center; background: #0f0f0f;
+  border-top: 1px solid #1a1a1a;
+}
+#map-compass-btn {
+  background: #1a1a1a; color: #aaa; border: 1px solid #333;
+  padding: 8px 16px; border-radius: 8px; font-size: 12px;
+  font-weight: 600; cursor: pointer; margin-top: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* TABBAR */
+#tabbar {
+  display: flex; background: #0f0f0f;
+  border-top: 1px solid #1a1a1a; flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.tab-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 10px 0 14px; background: none; border: none; color: #444;
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; -webkit-tap-highlight-color: transparent; position: relative; transition: color 0.15s;
+}
+.tab-btn.active { color: #fff; }
+.tab-btn svg { width: 22px; height: 22px; }
+.tab-badge {
+  position: absolute; top: 8px; right: calc(50% - 20px);
+  background: #4ade80; color: #000; font-size: 9px; font-weight: 800;
+  padding: 1px 5px; border-radius: 8px; display: none;
+}
+.tab-badge.visible { display: block; }
+</style>
+</head>
+<body>
+<div id="shell">
+  <div id="topbar">
+    <h1>Tally</h1>
+    <div class="topbar-right">
+      <button id="settings-btn" onclick="openSettings()" aria-label="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+      <span class="version-badge">V3.3</span>
+    </div>
+  </div>
+  <div id="content">
+
+    <!-- SPOT TAB -->
+    <div id="tab-spot" class="tab-view active">
+      <div id="viewfinder">
+        <video id="camera-feed" autoplay playsinline muted></video>
+        <div id="no-camera">
+          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span>Camera not started</span>
+        </div>
+        <div id="start-overlay">
+          <button id="start-btn" onclick="startApp()">Start tallying</button>
+          <span id="start-hint">Camera + GPS required</span>
+        </div>
+        <canvas id="compass-canvas" style="pointer-events:none;"></canvas>
+        <div id="crosshair">
+          <svg width="84" height="84" viewBox="0 0 84 84" fill="none">
+            <circle cx="42" cy="42" r="19" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <line x1="42" y1="5"  x2="42" y2="23" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <line x1="42" y1="61" x2="42" y2="79" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <line x1="5"  y1="42" x2="23" y2="42" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <line x1="61" y1="42" x2="79" y2="42" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="42" cy="42" r="2" fill="white" opacity="0.4"/>
+          </svg>
+        </div>
+        <div id="overhead-bar">
+          <span><span id="overhead-count">0</span> catchable nearby</span>
+          <span id="last-scanned"></span>
+        </div>
+        <button id="compass-btn" onclick="toggleCompass()">🧭 Enable compass</button>
+        <div id="gps-badge"></div>
+        <div id="zoom-badge"></div>
+        <div id="catch-btn" role="button" aria-label="Tally aircraft" tabindex="0">
+          <div id="catch-btn-inner"></div>
+        </div>
+      </div>
+      <div id="spot-status">
+        <span class="dot" id="status-dot"></span>
+        <span id="status-text">Tap Start to enable camera and GPS</span>
+      </div>
+    </div>
+
+    <!-- NEARBY TAB -->
+    <div id="tab-nearby" class="tab-view">
+      <div id="nearby-header">
+        <span id="nearby-title">In range · 10mi</span>
+        <span id="nearby-count">—</span>
+      </div>
+      <div id="nearby-view">
+        <div class="empty-state">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+          <span>Waiting for GPS lock...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOG TAB -->
+    <div id="tab-log" class="tab-view">
+      <div id="log-view">
+        <div class="empty-state">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          <span>No tallies yet.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP TAB -->
+    <div id="tab-map" class="tab-view">
+      <div id="map-view">
+        <div id="map-header">
+          <span id="map-title">Sky Map · 10mi</span>
+          <div id="map-header-right">
+            <span id="map-count"><strong id="map-catchable-count">0</strong> · <span id="map-high-count">0</span></span>
+            <button id="map-refresh-btn" onclick="manualRefresh()" title="Refresh">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 4v6h-6"/>
+                <path d="M20.49 15A9 9 0 1 1 18 6.36L23 10"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="map-timestamp" style="padding: 0 16px 6px; font-size: 10px; color: #444;">Never updated</div>
+        <div id="map-canvas-wrap">
+          <div id="leaflet-map"></div>
+          <canvas id="map-canvas"></canvas>
+          <div id="map-empty">Waiting for GPS lock...</div>
+        </div>
+        <div id="map-legend">
+          <div class="legend-item"><span class="legend-dot user"></span>You</div>
+          <div class="legend-item"><span class="legend-dot catchable"></span>Catchable</div>
+          <div class="legend-item"><span class="legend-dot high"></span>High</div>
+          <div class="legend-item"><span class="legend-dot grounded"></span>Grounded</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABBAR -->
+  <div id="tabbar">
+    <button class="tab-btn active" id="tabbtn-spot" onclick="switchTab('spot')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>Spot
+    </button>
+    <button class="tab-btn" id="tabbtn-map" onclick="switchTab('map')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <line x1="12" y1="3" x2="12" y2="21"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>Map
+    </button>
+    <button class="tab-btn" id="tabbtn-nearby" onclick="switchTab('nearby')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <circle cx="12" cy="12" r="9"/>
+      </svg>Nearby
+    </button>
+    <button class="tab-btn" id="tabbtn-log" onclick="switchTab('log')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+      </svg>Log
+      <span class="tab-badge" id="log-badge"></span>
+    </button>
+  </div>
+</div>
+
+<!-- DUPLICATE MODAL -->
+<div id="dup-modal">
+  <div id="dup-box">
+    <h3 id="dup-title">Already tallied!</h3>
+    <p id="dup-msg">You already have this aircraft in your log. Tally it again?</p>
+    <div id="dup-actions">
+      <button class="btn-dup-again" id="dup-again-btn">Tally again</button>
+      <button class="btn-dup-dismiss" onclick="closeDupModal()">Dismiss</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settings-modal">
+  <div id="settings-header">
+    <h2>Settings</h2>
+    <button id="settings-close" onclick="closeSettings()">Done</button>
+  </div>
+  <div id="settings-body">
+
+    <div class="settings-section">
+      <div class="settings-section-title">Display</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Show GPS coordinates</div>
+          <div class="settings-row-sub">Lat/lon badge on Spot tab</div>
+        </div>
+        <button class="settings-toggle" data-pref="showGps"></button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Show last updated time</div>
+          <div class="settings-row-sub">In the overhead status bar</div>
+        </div>
+        <button class="settings-toggle" data-pref="showUpdated"></button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Altitude tint on map</div>
+          <div class="settings-row-sub">Color aircraft icons by altitude</div>
+        </div>
+        <button class="settings-toggle" data-pref="altTint"></button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Behavior</div>
+      <div class="settings-slider-row">
+        <div class="settings-slider-header">
+          <span class="settings-row-label">Catch radius</span>
+          <span class="settings-slider-value" id="pref-catchRadius-val">5 mi</span>
+        </div>
+        <input type="range" class="settings-slider" data-pref="catchRadius" min="1" max="10" step="1"/>
+        <div class="settings-row-sub">Default 5 mi. Wider means more catches but less aim-and-shoot.</div>
+      </div>
+      <div class="settings-slider-row">
+        <div class="settings-slider-header">
+          <span class="settings-row-label">Max altitude</span>
+          <span class="settings-slider-value" id="pref-maxAlt-val">10,000 ft</span>
+        </div>
+        <input type="range" class="settings-slider" data-pref="maxAlt" min="1000" max="20000" step="1000"/>
+        <div class="settings-row-sub">Aircraft above this won't be catchable. Default 10,000 ft.</div>
+      </div>
+      <div class="settings-slider-row">
+        <div class="settings-slider-header">
+          <span class="settings-row-label">Cooldown after tally</span>
+          <span class="settings-slider-value" id="pref-cooldown-val">10 s</span>
+        </div>
+        <input type="range" class="settings-slider" data-pref="cooldown" min="0" max="60" step="5"/>
+        <div class="settings-row-sub">Prevents same aircraft being tallied twice quickly. 0 = no cooldown.</div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Data</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">Save reference photos</div>
+          <div class="settings-row-sub">Download stock photo at tally so it survives offline. Uses ~50KB per catch.</div>
+        </div>
+        <button class="settings-toggle" data-pref="savePhotos"></button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Storage</div>
+      <button class="settings-btn warn" onclick="confirmClearPhotos()">Clear photo cache</button>
+      <button class="settings-btn danger" onclick="confirmClearCatches()">Clear all catches</button>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">About</div>
+      <div class="settings-about">
+        <strong>Tally V3.3</strong><br>
+        Aircraft data via <a href="https://adsb.lol" target="_blank">adsb.lol</a><br>
+        Reference photos via <a href="https://www.planespotters.net" target="_blank">Planespotters.net</a><br>
+        Route data via <a href="https://www.adsbdb.com" target="_blank">adsbdb.com</a>
+      </div>
+      <div class="settings-restore-row">
+        <button class="settings-restore-link" onclick="confirmRestoreDefaults()">Restore default settings</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRM CATCH MODAL -->
+<div id="confirm-modal">
+  <div id="confirm-sheet"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const RADIUS_MI  = 10;
+const CATCH_RADIUS_MI = 5;
+const GROUND_CATCH_RADIUS_MI = 1;
+const MAX_ALT_FT = 10000;
+const MAP_MAX_ALT_FT = 20000;
+const COOLDOWN_MS = 10000;
+const PHOTO_MAX_WIDTH = 800;
+const PHOTO_QUALITY = 0.7;
+
+/* ── USER PREFERENCES ──
+   Persisted to localStorage. Constants above are the defaults.
+   Anything user-tunable reads from Prefs.get(key), never the const directly. */
+const PREF_DEFAULTS = {
+  showGps: true,
+  showUpdated: true,
+  altTint: true,
+  catchRadius: 5,        // miles, 1-10
+  maxAlt: 10000,         // feet, 1000-20000
+  cooldown: 10,          // seconds, 0-60
+  savePhotos: true,
+};
+const Prefs = (() => {
+  const KEY = 'tally_prefs_v1';
+  let cache = null;
+  function load(){
+    if(cache) return cache;
+    try{
+      const raw = localStorage.getItem(KEY);
+      const parsed = raw ? JSON.parse(raw) : {};
+      cache = {...PREF_DEFAULTS, ...parsed};
+    }catch(e){ cache = {...PREF_DEFAULTS}; }
+    return cache;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(cache)); }catch(e){}
+  }
+  function get(key){ return load()[key]; }
+  function set(key, val){
+    load();
+    cache[key] = val;
+    save();
+  }
+  function reset(){
+    cache = {...PREF_DEFAULTS};
+    save();
+  }
+  return {get, set, reset, load};
+})();
+// Derived helpers — always read fresh so changes take effect mid-session
+function getCatchRadiusMi(){ return Prefs.get('catchRadius'); }
+function getMaxAltFt(){ return Prefs.get('maxAlt'); }
+function getCooldownMs(){ return Prefs.get('cooldown') * 1000; }
+
+/* ── AIRCRAFT TYPE LOOKUP ──
+   ICAO type codes → human-readable full names.
+   Covers most common commercial, GA, helicopter, and military types
+   that show up on ADS-B. Unknown codes fall back to the raw code. */
+const AIRCRAFT_TYPES = {
+  // --- Commercial: Boeing ---
+  'B731':'Boeing 737-100','B732':'Boeing 737-200','B733':'Boeing 737-300',
+  'B734':'Boeing 737-400','B735':'Boeing 737-500','B736':'Boeing 737-600',
+  'B737':'Boeing 737-700','B738':'Boeing 737-800','B739':'Boeing 737-900',
+  'B37M':'Boeing 737 MAX 7','B38M':'Boeing 737 MAX 8','B39M':'Boeing 737 MAX 9','B3XM':'Boeing 737 MAX 10',
+  'B741':'Boeing 747-100','B742':'Boeing 747-200','B743':'Boeing 747-300',
+  'B744':'Boeing 747-400','B748':'Boeing 747-8','BLCF':'Boeing 747 Dreamlifter',
+  'B752':'Boeing 757-200','B753':'Boeing 757-300',
+  'B762':'Boeing 767-200','B763':'Boeing 767-300','B764':'Boeing 767-400',
+  'B772':'Boeing 777-200','B77L':'Boeing 777-200LR','B773':'Boeing 777-300','B77W':'Boeing 777-300ER','B778':'Boeing 777-8','B779':'Boeing 777-9',
+  'B788':'Boeing 787-8 Dreamliner','B789':'Boeing 787-9 Dreamliner','B78X':'Boeing 787-10 Dreamliner',
+  // --- Commercial: Airbus ---
+  'A306':'Airbus A300-600','A30B':'Airbus A300B',
+  'A310':'Airbus A310',
+  'A318':'Airbus A318','A319':'Airbus A319','A320':'Airbus A320','A321':'Airbus A321',
+  'A19N':'Airbus A319neo','A20N':'Airbus A320neo','A21N':'Airbus A321neo',
+  'A332':'Airbus A330-200','A333':'Airbus A330-300','A337':'Airbus A330-700 Beluga XL',
+  'A338':'Airbus A330-800neo','A339':'Airbus A330-900neo',
+  'A342':'Airbus A340-200','A343':'Airbus A340-300','A345':'Airbus A340-500','A346':'Airbus A340-600',
+  'A359':'Airbus A350-900','A35K':'Airbus A350-1000',
+  'A388':'Airbus A380-800',
+  // --- Commercial: Embraer / Bombardier / others ---
+  'E135':'Embraer ERJ-135','E145':'Embraer ERJ-145',
+  'E170':'Embraer 170','E175':'Embraer 175','E190':'Embraer 190','E195':'Embraer 195',
+  'E290':'Embraer E190-E2','E295':'Embraer E195-E2',
+  'CRJ1':'Bombardier CRJ-100','CRJ2':'Bombardier CRJ-200','CRJ7':'Bombardier CRJ-700','CRJ9':'Bombardier CRJ-900','CRJX':'Bombardier CRJ-1000',
+  'BCS1':'Airbus A220-100','BCS3':'Airbus A220-300',
+  'DH8A':'Dash 8-100','DH8B':'Dash 8-200','DH8C':'Dash 8-300','DH8D':'Dash 8 Q400',
+  'AT43':'ATR 42-300','AT45':'ATR 42-500','AT72':'ATR 72','AT75':'ATR 72-500','AT76':'ATR 72-600',
+  'MD11':'McDonnell Douglas MD-11','MD80':'McDonnell Douglas MD-80','MD81':'McDonnell Douglas MD-81',
+  'MD82':'McDonnell Douglas MD-82','MD83':'McDonnell Douglas MD-83','MD87':'McDonnell Douglas MD-87','MD88':'McDonnell Douglas MD-88','MD90':'McDonnell Douglas MD-90',
+  // --- General Aviation: Cessna ---
+  'C150':'Cessna 150','C152':'Cessna 152',
+  'C172':'Cessna 172 Skyhawk','C72R':'Cessna 172 Cutlass',
+  'C175':'Cessna 175','C177':'Cessna 177 Cardinal',
+  'C180':'Cessna 180 Skywagon','C182':'Cessna 182 Skylane','C185':'Cessna 185 Skywagon',
+  'C188':'Cessna 188 Agwagon',
+  'C206':'Cessna 206 Stationair','C207':'Cessna 207 Skywagon','C208':'Cessna 208 Caravan','C20T':'Cessna 208B Grand Caravan',
+  'C210':'Cessna 210 Centurion',
+  'C310':'Cessna 310','C337':'Cessna 337 Skymaster',
+  'C402':'Cessna 402','C414':'Cessna 414','C421':'Cessna 421 Golden Eagle',
+  'C25A':'Cessna Citation CJ2','C25B':'Cessna Citation CJ3','C25C':'Cessna Citation CJ4',
+  'C500':'Cessna Citation I','C510':'Cessna Citation Mustang','C525':'Cessna CitationJet',
+  'C550':'Cessna Citation II','C560':'Cessna Citation V','C56X':'Cessna Citation Excel',
+  'C650':'Cessna Citation III','C680':'Cessna Citation Sovereign','C68A':'Cessna Citation Latitude',
+  'C700':'Cessna Citation Longitude','C750':'Cessna Citation X',
+  // --- General Aviation: Piper / Beech / Cirrus / Mooney / Diamond ---
+  'PA18':'Piper PA-18 Super Cub','PA22':'Piper Tri-Pacer','PA23':'Piper Apache',
+  'PA24':'Piper Comanche','PA28':'Piper Cherokee','P28A':'Piper Cherokee','P28R':'Piper Arrow',
+  'PA30':'Piper Twin Comanche','PA31':'Piper Navajo','PA32':'Piper Cherokee Six',
+  'PA34':'Piper Seneca','PA38':'Piper Tomahawk','PA44':'Piper Seminole','PA46':'Piper Malibu',
+  'BE18':'Beechcraft Model 18','BE19':'Beechcraft Sport','BE20':'Beechcraft King Air 200',
+  'BE23':'Beechcraft Musketeer','BE24':'Beechcraft Sierra','BE33':'Beechcraft Debonair',
+  'BE35':'Beechcraft Bonanza','BE36':'Beechcraft Bonanza A36','BE40':'Beechjet 400',
+  'BE55':'Beechcraft Baron 55','BE58':'Beechcraft Baron 58','BE60':'Beechcraft Duke',
+  'BE76':'Beechcraft Duchess','BE77':'Beechcraft Skipper',
+  'BE9L':'Beechcraft King Air 90','BE9T':'Beechcraft King Air 90','B190':'Beechcraft 1900',
+  'B350':'Beechcraft King Air 350',
+  'SR20':'Cirrus SR20','SR22':'Cirrus SR22','SF50':'Cirrus Vision Jet',
+  'M20P':'Mooney M20','M20T':'Mooney M20TN','M20J':'Mooney M20J','M20K':'Mooney M20K',
+  'DA40':'Diamond DA40','DA42':'Diamond DA42','DA62':'Diamond DA62',
+  // --- Business jets ---
+  'GLF4':'Gulfstream IV','GLF5':'Gulfstream V','GLF6':'Gulfstream G600','G150':'Gulfstream G150','G280':'Gulfstream G280',
+  'GL5T':'Bombardier Global 5000','GLEX':'Bombardier Global Express','GL7T':'Bombardier Global 7500',
+  'CL30':'Bombardier Challenger 300','CL35':'Bombardier Challenger 350','CL60':'Bombardier Challenger 600/601/604',
+  'LJ31':'Learjet 31','LJ35':'Learjet 35','LJ45':'Learjet 45','LJ60':'Learjet 60','LJ75':'Learjet 75',
+  'FA10':'Dassault Falcon 10','FA20':'Dassault Falcon 20','FA50':'Dassault Falcon 50',
+  'FA7X':'Dassault Falcon 7X','FA8X':'Dassault Falcon 8X','F2TH':'Dassault Falcon 2000',
+  'F900':'Dassault Falcon 900','E50P':'Embraer Phenom 100','E55P':'Embraer Phenom 300',
+  'E545':'Embraer Praetor 500','E550':'Embraer Praetor 600','HDJT':'Honda HA-420 HondaJet',
+  // --- Helicopters ---
+  'R22':'Robinson R22','R44':'Robinson R44','R66':'Robinson R66',
+  'B06':'Bell 206 JetRanger','B06T':'Bell 206 TwinRanger','B407':'Bell 407',
+  'B412':'Bell 412','B429':'Bell 429','B430':'Bell 430','B47G':'Bell 47',
+  'EC20':'Airbus H120','EC30':'Airbus H130','EC35':'Airbus H135','EC45':'Airbus H145',
+  'EC75':'Airbus H175','AS50':'Airbus AS350 Écureuil','AS55':'Airbus AS355','AS65':'Airbus AS365 Dauphin',
+  'EC20':'Eurocopter EC120','EC25':'Eurocopter EC225',
+  'A109':'AgustaWestland AW109','A119':'AgustaWestland AW119','A139':'AgustaWestland AW139',
+  'A169':'AgustaWestland AW169','A189':'AgustaWestland AW189',
+  'S76':'Sikorsky S-76','S92':'Sikorsky S-92','UH1':'Bell UH-1 Iroquois (Huey)',
+  // --- Military: US ---
+  'F16':'F-16 Fighting Falcon','F18':'F/A-18 Hornet','F18S':'F/A-18E/F Super Hornet',
+  'F22':'F-22 Raptor','F35':'F-35 Lightning II','F15':'F-15 Eagle','F14':'F-14 Tomcat',
+  'A10':'A-10 Thunderbolt II','B1':'B-1 Lancer','B2':'B-2 Spirit','B52':'B-52 Stratofortress',
+  'C5M':'C-5 Galaxy','C17':'C-17 Globemaster III','C130':'C-130 Hercules','C30J':'C-130J Super Hercules',
+  'C5':'C-5 Galaxy','K35R':'KC-135 Stratotanker','K10':'KC-10 Extender','K46':'KC-46 Pegasus',
+  'E3CF':'E-3 Sentry AWACS','E6':'E-6 Mercury','E8':'E-8 Joint STARS','U2':'U-2 Dragon Lady',
+  'P3':'P-3 Orion','P8':'P-8 Poseidon','V22':'V-22 Osprey','MV22':'MV-22B Osprey',
+  'H60':'UH-60 Black Hawk','S70':'Sikorsky S-70 / UH-60','H47':'CH-47 Chinook','H53':'CH-53 / MH-53',
+  'AH64':'AH-64 Apache','OH58':'OH-58 Kiowa','TH57':'TH-57 Sea Ranger',
+  'T6':'T-6 Texan II','T38':'T-38 Talon','T44':'T-44 Pegasus','T45':'T-45 Goshawk',
+  // --- Misc / Soviet / others ---
+  'AN12':'Antonov An-12','AN24':'Antonov An-24','AN26':'Antonov An-26','AN72':'Antonov An-72',
+  'AN12':'Antonov An-12','A124':'Antonov An-124 Ruslan','A225':'Antonov An-225 Mriya',
+  'IL76':'Ilyushin Il-76','IL96':'Ilyushin Il-96','TU54':'Tupolev Tu-154','TU34':'Tupolev Tu-134',
+  'SU95':'Sukhoi Superjet 100',
+  // --- Drones / unusual ---
+  'BALL':'Hot Air Balloon','GLID':'Glider','GYRO':'Gyrocopter','ULAC':'Ultralight',
+};
+
+function fullAircraftName(typeCode){
+  if(!typeCode||typeCode==='—')return null;
+  return AIRCRAFT_TYPES[typeCode.toUpperCase()]||null;
+}
+
+/* ── HELICOPTER TYPE DETECTION ──
+   ICAO type codes that are helicopters. Used to swap the map/nearby icon
+   from a fixed-wing silhouette to a rotorcraft glyph. */
+const HELI_TYPES = new Set([
+  // Robinson
+  'R22','R44','R66',
+  // Bell
+  'B06','B06T','B407','B412','B429','B430','B47G','UH1',
+  // Airbus / Eurocopter
+  'EC20','EC30','EC35','EC45','EC75','EC25',
+  'AS50','AS55','AS65',
+  'H120','H125','H130','H135','H145','H160','H175','H215','H225',
+  // AgustaWestland
+  'A109','A119','A139','A169','A189',
+  // Sikorsky
+  'S76','S92','S70','H60','S61','S64','S65',
+  // Military rotorcraft
+  'H47','H53','AH64','OH58','TH57','MV22','V22',
+  // Misc
+  'EH10','MD52','MD60','MD90H','EN48','SCBL','NH90',
+]);
+function isHelicopter(typeCode){
+  if(!typeCode||typeCode==='—')return false;
+  return HELI_TYPES.has(typeCode.toUpperCase());
+}
+
+/* ── REGISTRATION → COUNTRY ──
+   Civilian tail prefixes. Sorted longest-first so multi-char prefixes match
+   before single-char ones (e.g. "JA" before "J"). */
+const REG_PREFIXES = [
+  // Longer / specific prefixes first
+  ['VH-','Australia'], ['ZK-','New Zealand'], ['ZS-','South Africa'],
+  ['JA','Japan'], ['HL','South Korea'], ['B-K','Hong Kong'], ['B-M','Macau'],
+  ['9V-','Singapore'], ['9M-','Malaysia'], ['9H-','Malta'],
+  ['HS-','Thailand'], ['HZ-','Saudi Arabia'], ['HB-','Switzerland'],
+  ['LV-','Argentina'], ['LN-','Norway'], ['LX-','Luxembourg'], ['LY-','Lithuania'], ['LZ-','Bulgaria'],
+  ['OE-','Austria'], ['OH-','Finland'], ['OK-','Czech Republic'], ['OM-','Slovakia'], ['OO-','Belgium'], ['OY-','Denmark'],
+  ['PH-','Netherlands'], ['PJ-','Sint Maarten/Curaçao'], ['PK-','Indonesia'], ['PP-','Brazil'], ['PR-','Brazil'], ['PT-','Brazil'], ['PU-','Brazil'],
+  ['RA-','Russia'], ['RP-','Philippines'],
+  ['SE-','Sweden'], ['SP-','Poland'], ['SU-','Egypt'], ['SX-','Greece'],
+  ['TC-','Turkey'], ['TF-','Iceland'], ['TS-','Tunisia'],
+  ['UR-','Ukraine'], ['VN-','Vietnam'], ['VP-','UK Overseas Territory'], ['VQ-','UK Overseas Territory'], ['VT-','India'],
+  ['YR-','Romania'], ['YL-','Latvia'], ['YU-','Serbia'], ['YV-','Venezuela'],
+  ['ZA-','Albania'],
+  ['EC-','Spain'], ['EI-','Ireland'], ['EP-','Iran'], ['ER-','Moldova'], ['ES-','Estonia'], ['ET-','Ethiopia'],
+  ['CC-','Chile'], ['CN-','Morocco'], ['CP-','Bolivia'], ['CS-','Portugal'], ['CU-','Cuba'], ['CX-','Uruguay'],
+  ['XA-','Mexico'], ['XB-','Mexico'], ['XC-','Mexico'], ['XU-','Cambodia'], ['XY-','Myanmar'],
+  // Single-letter, must be last
+  ['N','United States'],
+  ['C','Canada'],
+  ['G','United Kingdom'],
+  ['D','Germany'],
+  ['F','France'],
+  ['I','Italy'],
+];
+function countryFromReg(reg){
+  if(!reg||reg==='—')return null;
+  const r=reg.toUpperCase();
+  for(const [prefix,country] of REG_PREFIXES){
+    if(r.startsWith(prefix))return country;
+  }
+  return null;
+}
+
+/* ── AIRCRAFT CATEGORY ──
+   Derived from type code. Returns a short tag like 'Helicopter', 'Heavy jet',
+   'Light GA', 'Business jet', 'Military', 'Regional jet', or null if unknown. */
+const CAT_HEAVY = new Set(['B741','B742','B743','B744','B748','BLCF','B772','B77L','B773','B77W','B778','B779','B788','B789','B78X','A332','A333','A337','A338','A339','A342','A343','A345','A346','A359','A35K','A388','MD11','A124','A225','IL76','IL96']);
+const CAT_NARROW = new Set(['B731','B732','B733','B734','B735','B736','B737','B738','B739','B37M','B38M','B39M','B3XM','B752','B753','B762','B763','B764','A318','A319','A320','A321','A19N','A20N','A21N','A306','A30B','A310','MD80','MD81','MD82','MD83','MD87','MD88','MD90','BCS1','BCS3','TU54']);
+const CAT_REGIONAL = new Set(['E135','E145','E170','E175','E190','E195','E290','E295','CRJ1','CRJ2','CRJ7','CRJ9','CRJX','DH8A','DH8B','DH8C','DH8D','AT43','AT45','AT72','AT75','AT76','SU95','B190']);
+const CAT_BIZJET = new Set(['GLF4','GLF5','GLF6','G150','G280','GL5T','GLEX','GL7T','CL30','CL35','CL60','LJ31','LJ35','LJ45','LJ60','LJ75','FA10','FA20','FA50','FA7X','FA8X','F2TH','F900','E50P','E55P','E545','E550','HDJT','C25A','C25B','C25C','C500','C510','C525','C550','C560','C56X','C650','C680','C68A','C700','C750','C208','C20T','BE40']);
+const CAT_LIGHT = new Set(['C150','C152','C172','C72R','C175','C177','C180','C182','C185','C188','C206','C207','C210','C310','C337','C402','C414','C421','PA18','PA22','PA23','PA24','PA28','P28A','P28R','PA30','PA31','PA32','PA34','PA38','PA44','PA46','BE18','BE19','BE20','BE23','BE24','BE33','BE35','BE36','BE55','BE58','BE60','BE76','BE77','BE9L','BE9T','B350','SR20','SR22','SF50','M20P','M20T','M20J','M20K','DA40','DA42','DA62']);
+const CAT_MIL = new Set(['F16','F18','F18S','F22','F35','F15','F14','A10','B1','B2','B52','C5M','C17','C130','C30J','C5','K35R','K10','K46','E3CF','E6','E8','U2','P3','P8','V22','MV22','H60','S70','H47','H53','AH64','OH58','TH57','T6','T38','T44','T45','UH1']);
+
+function aircraftCategory(typeCode){
+  if(!typeCode||typeCode==='—')return null;
+  const t=typeCode.toUpperCase();
+  if(CAT_MIL.has(t))return 'Military';
+  if(HELI_TYPES.has(t))return 'Helicopter';
+  if(CAT_HEAVY.has(t))return 'Heavy airliner';
+  if(CAT_NARROW.has(t))return 'Airliner';
+  if(CAT_REGIONAL.has(t))return 'Regional airliner';
+  if(CAT_BIZJET.has(t))return 'Business jet';
+  if(CAT_LIGHT.has(t))return 'Light GA';
+  return null;
+}
+
+/* ── MILITARY DETECTION ──
+   Weighted signals: ADS-B mil flag, ICAO hex ranges, type code, callsign prefix, operator string.
+   Two+ matches → high confidence. Type-only match (e.g. civilian warbird) → "airframe only".
+*/
+
+// US military ICAO hex ranges (commonly observed; not exhaustive — foreign mil is messier and partial here).
+// Each entry is [startHex, endHex] inclusive. Ranges from FAA/ICAO allocations and community-known mil blocks.
+const MIL_HEX_RANGES = [
+  // US military bulk allocation (DoD)
+  [0xADF7C8, 0xAFFFFF],
+  // USAF/Navy/Army common observed range
+  [0xAE0000, 0xAFFFFF],
+  // RAF / UK military
+  [0x43C000, 0x43CFFF],
+  // German Luftwaffe
+  [0x3F0000, 0x3FFFFF],
+  // French Air Force
+  [0x3B7000, 0x3B7FFF],
+  // Canadian Forces
+  [0xC03000, 0xC0FFFF],
+  // Australian Defence Force
+  [0x7C822D, 0x7C82FF],
+];
+
+function isMilHex(hex){
+  if(!hex||hex==='—')return false;
+  const n=parseInt(hex,16);
+  if(isNaN(n))return false;
+  for(const [lo,hi] of MIL_HEX_RANGES){
+    if(n>=lo&&n<=hi)return true;
+  }
+  return false;
+}
+
+// Callsign prefix → {branch, country}. Order matters where prefixes nest; longest match wins via sorted iteration.
+const MIL_CALLSIGN_PREFIXES = [
+  // US Air Force
+  ['RCH',   {branch:'USAF (AMC)',           country:'US'}], // Air Mobility Command (C-17, KC-46, C-130, C-5)
+  ['SAM',   {branch:'USAF (Special Air Mission)',country:'US'}], // VIP transport
+  ['REACH', {branch:'USAF (AMC)',           country:'US'}],
+  ['VENUS', {branch:'USAF VIP',             country:'US'}],
+  ['SPAR',  {branch:'USAF VIP',             country:'US'}],
+  ['VADER', {branch:'USAF',                 country:'US'}],
+  ['MAGMA', {branch:'USAF',                 country:'US'}],
+  ['BOLT',  {branch:'USAF',                 country:'US'}],
+  ['SHELL', {branch:'USAF (tanker)',        country:'US'}],
+  ['TEXN',  {branch:'USAF (T-6)',           country:'US'}],
+  ['HOIST', {branch:'USAF (helo)',          country:'US'}],
+  ['DOOM',  {branch:'USAF',                 country:'US'}],
+  ['HOMER', {branch:'USAF',                 country:'US'}],
+  // US Navy
+  ['NAVY',  {branch:'US Navy',              country:'US'}],
+  ['CNV',   {branch:'US Navy (logistics)',  country:'US'}],
+  ['CONVOY',{branch:'US Navy (logistics)',  country:'US'}],
+  // US Marines
+  ['MARINE',{branch:'US Marines',           country:'US'}],
+  // US Army
+  ['PAT',   {branch:'US Army (priority air transport)',country:'US'}],
+  ['ARMY',  {branch:'US Army',              country:'US'}],
+  ['DUKE',  {branch:'US Army',              country:'US'}],
+  // US Coast Guard
+  ['COAST', {branch:'US Coast Guard',       country:'US'}],
+  ['USCG',  {branch:'US Coast Guard',       country:'US'}],
+  // US National Guard
+  ['GUARD', {branch:'US National Guard',    country:'US'}],
+  // UK Royal Air Force
+  ['RRR',   {branch:'RAF',                  country:'UK'}],
+  ['ASCOT', {branch:'RAF',                  country:'UK'}],
+  ['KITTY', {branch:'RAF',                  country:'UK'}],
+  // German Luftwaffe
+  ['GAF',   {branch:'German Air Force',     country:'DE'}],
+  // French
+  ['CTM',   {branch:'French Air Force',     country:'FR'}],
+  ['FAF',   {branch:'French Air Force',     country:'FR'}],
+  // Canadian
+  ['CFC',   {branch:'Canadian Forces',      country:'CA'}],
+  ['HUSKY', {branch:'Canadian Forces',      country:'CA'}],
+  // Israeli
+  ['IAF',   {branch:'Israeli Air Force',    country:'IL'}],
+];
+// Sort by prefix length DESC so longer prefixes (REACH, ASCOT) beat shorter (RCH, etc.).
+MIL_CALLSIGN_PREFIXES.sort((a,b)=>b[0].length-a[0].length);
+
+function matchMilCallsign(callsign){
+  if(!callsign||callsign==='—'||callsign==='UNKNOWN')return null;
+  const cs=callsign.trim().toUpperCase().replace(/\s+/g,'');
+  for(const [prefix,info] of MIL_CALLSIGN_PREFIXES){
+    if(cs.startsWith(prefix)){
+      // Sanity: prefix must be followed by digit or end of string (avoid "NAVY" matching a civil reg starting with NAV).
+      const next=cs.charAt(prefix.length);
+      if(next===''||/[0-9]/.test(next)){
+        return info;
+      }
+    }
+  }
+  return null;
+}
+
+// Operator string patterns. Last-resort signal — operator field can be wrong or generic.
+const MIL_OPERATOR_PATTERNS = [
+  [/\bAIR\s*FORCE\b/i,    'Air Force'],
+  [/\bU\.?S\.?\s*NAVY\b/i,'US Navy'],
+  [/\bMARINE\s*CORPS\b/i, 'US Marines'],
+  [/\bU\.?S\.?\s*ARMY\b/i,'US Army'],
+  [/\bCOAST\s*GUARD\b/i,  'US Coast Guard'],
+  [/\bNATIONAL\s*GUARD\b/i,'US National Guard'],
+  [/\bROYAL\s*AIR\s*FORCE\b/i,'RAF'],
+  [/\bLUFTWAFFE\b/i,      'Luftwaffe'],
+  [/\bRCAF\b/i,           'Canadian Forces'],
+];
+
+function matchMilOperator(op){
+  if(!op||op==='—')return null;
+  for(const [re,branch] of MIL_OPERATOR_PATTERNS){
+    if(re.test(op))return branch;
+  }
+  return null;
+}
+
+// Aggregate detection. Returns:
+//   { isMil: bool, confidence: 'high'|'low'|null, airframeOnly: bool, branch: string|null, signals: string[] }
+// - high: 2+ signals matched, including at least one strong signal (mil flag, hex range, callsign, operator)
+// - low:  1 signal matched
+// - airframeOnly: true if ONLY signal is type code (e.g., civilian-operated warbird like an L-39 at an airshow)
+function detectMilitary(ac){
+  const signals=[];
+  let branch=null;
+
+  // Strong signal: ADS-B mil flag
+  if(ac.mil===true||ac.mil===1||ac.mil==='1'){
+    signals.push('mil-flag');
+  }
+  // Strong signal: ICAO hex range
+  if(isMilHex(ac.hex)){
+    signals.push('hex-range');
+  }
+  // Strong signal: callsign prefix
+  const csInfo=matchMilCallsign(ac.flight||ac.r||'');
+  if(csInfo){
+    signals.push('callsign');
+    if(!branch)branch=csInfo.branch;
+  }
+  // Strong signal: operator field
+  const opBranch=matchMilOperator(ac.ownOp||ac.op||'');
+  if(opBranch){
+    signals.push('operator');
+    if(!branch)branch=opBranch;
+  }
+  // Weak signal: type code (treated separately because warbirds exist)
+  const typeMil=ac.t && CAT_MIL.has(ac.t.toUpperCase());
+  if(typeMil){
+    signals.push('type-code');
+  }
+
+  const strongCount = signals.filter(s=>s!=='type-code').length;
+
+  if(strongCount>=2){
+    return {isMil:true, confidence:'high', airframeOnly:false, branch:branch||'Military', signals};
+  }
+  if(strongCount===1){
+    // One strong signal alone — still military but medium confidence
+    return {isMil:true, confidence:'medium', airframeOnly:false, branch:branch||'Military', signals};
+  }
+  if(typeMil){
+    // Only the airframe says military; could be a civilian-operated warbird
+    return {isMil:true, confidence:'low', airframeOnly:true, branch:'Military airframe', signals};
+  }
+  return {isMil:false, confidence:null, airframeOnly:false, branch:null, signals};
+}
+
+/* ── PHOTO STORE (IndexedDB) ── */
+const PhotoStore = (() => {
+  const DB_NAME = 'spotter_photos';
+  const STORE = 'photos';
+  let dbPromise = null;
+
+  function openDB(){
+    if(dbPromise) return dbPromise;
+    dbPromise = new Promise((resolve,reject)=>{
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if(!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+      };
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror   = e => reject(e.target.error);
+    });
+    return dbPromise;
+  }
+
+  async function put(id, blob){
+    const db = await openDB();
+    return new Promise((resolve,reject)=>{
+      const tx = db.transaction(STORE,'readwrite');
+      tx.objectStore(STORE).put(blob, id);
+      tx.oncomplete = ()=>resolve();
+      tx.onerror = ()=>reject(tx.error);
+    });
+  }
+
+  async function get(id){
+    const db = await openDB();
+    return new Promise((resolve,reject)=>{
+      const tx = db.transaction(STORE,'readonly');
+      const req = tx.objectStore(STORE).get(id);
+      req.onsuccess = ()=>resolve(req.result || null);
+      req.onerror = ()=>reject(req.error);
+    });
+  }
+
+  async function del(id){
+    const db = await openDB();
+    return new Promise((resolve,reject)=>{
+      const tx = db.transaction(STORE,'readwrite');
+      tx.objectStore(STORE).delete(id);
+      tx.oncomplete = ()=>resolve();
+      tx.onerror = ()=>reject(tx.error);
+    });
+  }
+
+  async function clear(){
+    const db = await openDB();
+    return new Promise((resolve,reject)=>{
+      const tx = db.transaction(STORE,'readwrite');
+      tx.objectStore(STORE).clear();
+      tx.oncomplete = ()=>resolve();
+      tx.onerror = ()=>reject(tx.error);
+    });
+  }
+
+  // Capture a frame from the live <video>, downscale, return a JPEG Blob
+  async function captureFromVideo(videoEl){
+    if(!videoEl||!videoEl.videoWidth||!videoEl.videoHeight) return null;
+    const srcW = videoEl.videoWidth, srcH = videoEl.videoHeight;
+
+    // If the user has applied digital zoom via CSS transform, crop the source
+    // rect to match what they actually see. Hardware/native zoom is already
+    // baked into the video frames, so we only correct for the CSS portion.
+    let digitalZoom = 1;
+    try{
+      if(typeof currentZoom==='number' && currentZoom>1){
+        // Digital portion = total / native applied
+        const nativeApplied = (typeof nativeZoomMax==='number' && nativeZoomAvailable)
+          ? Math.min(currentZoom, nativeZoomMax) : 1;
+        digitalZoom = Math.max(1, currentZoom / nativeApplied);
+      }
+    }catch(e){}
+
+    const cropW = Math.round(srcW / digitalZoom);
+    const cropH = Math.round(srcH / digitalZoom);
+    const cropX = Math.round((srcW - cropW)/2);
+    const cropY = Math.round((srcH - cropH)/2);
+
+    const scale = Math.min(1, PHOTO_MAX_WIDTH/cropW);
+    const w = Math.round(cropW*scale), h = Math.round(cropH*scale);
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(videoEl, cropX, cropY, cropW, cropH, 0, 0, w, h);
+    return new Promise(resolve=>{
+      canvas.toBlob(blob=>resolve(blob), 'image/jpeg', PHOTO_QUALITY);
+    });
+  }
+
+  // Convert a Blob to an object URL the UI can render. Caller should revokeObjectURL when done.
+  function toObjectURL(blob){ return blob ? URL.createObjectURL(blob) : null; }
+
+  return { put, get, del, clear, captureFromVideo, toObjectURL };
+})();
+
+let stream=null, userLat=null, userLon=null;
+// Camera zoom state — supports CSS-transform digital zoom always; native
+// hardware zoom when the device exposes it via MediaStreamTrack.applyConstraints.
+let cameraTrack=null;
+let nativeZoomAvailable=false, nativeZoomMin=1, nativeZoomMax=1, nativeZoomStep=0.1;
+let currentZoom=1; // user-facing zoom level; clamped to [1, MAX_DIGITAL_ZOOM] (or native max)
+const MAX_DIGITAL_ZOOM=3; // CSS fallback caps here — beyond this, quality is mush
+let overheadFlights=[], mapFlights=[];
+let gpsWatcher=null, pollInterval=null;
+let started=false, catching=false, gpsLocked=false;
+let compassEnabled=false, deviceHeading=0;
+let pendingDupData=null;
+const recentCatches={};
+
+const video        = document.getElementById('camera-feed');
+const statusText   = document.getElementById('status-text');
+const statusDot    = document.getElementById('status-dot');
+const overheadBar  = document.getElementById('overhead-bar');
+const overheadCount= document.getElementById('overhead-count');
+const lastScanned  = document.getElementById('last-scanned');
+const gpsBadge     = document.getElementById('gps-badge');
+const catchBtn     = document.getElementById('catch-btn');
+const logBadge     = document.getElementById('log-badge');
+const startOverlay = document.getElementById('start-overlay');
+const compassBtn   = document.getElementById('compass-btn');
+const canvas       = document.getElementById('compass-canvas');
+const ctx          = canvas.getContext('2d');
+
+/* ── TABS ── */
+function switchTab(name) {
+  document.querySelectorAll('.tab-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('tabbtn-'+name).classList.add('active');
+  if(name==='nearby') renderNearbyTab();
+  if(name==='log') renderLogTab();
+  if(name==='map') startMapDraw();
+}
+
+/* ── STATUS ── */
+function setStatus(msg,color){
+  statusText.textContent=msg;
+  statusDot.className='dot'+(color?' '+color:'');
+}
+
+/* ── STORAGE ── */
+function loadCatches(){
+  try{return JSON.parse(localStorage.getItem('spotter_catches')||'[]');}catch(e){return[];}
+}
+function saveCatches(arr){localStorage.setItem('spotter_catches',JSON.stringify(arr));}
+function updateBadges(){
+  const n=loadCatches().length;
+  logBadge.textContent=n;
+  logBadge.className='tab-badge'+(n>0?' visible':'');
+}
+
+/* ── START ── */
+async function startApp(){
+  if(started)return;
+  started=true;
+  startOverlay.style.display='none';
+  document.getElementById('no-camera').style.display='none';
+  setStatus('Requesting camera...','yellow');
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    video.srcObject=stream;
+    video.play().catch(()=>{});
+    // Probe for native hardware zoom (Safari 17+ on devices with telephoto/ultrawide).
+    // If unavailable, we fall back to CSS-transform digital zoom.
+    cameraTrack = stream.getVideoTracks()[0] || null;
+    if(cameraTrack && typeof cameraTrack.getCapabilities==='function'){
+      const caps = cameraTrack.getCapabilities();
+      if(caps && typeof caps.zoom==='object' && caps.zoom){
+        nativeZoomMin = caps.zoom.min || 1;
+        nativeZoomMax = caps.zoom.max || 1;
+        nativeZoomStep = caps.zoom.step || 0.1;
+        nativeZoomAvailable = nativeZoomMax > nativeZoomMin;
+      }
+    }
+    setStatus('Camera active — waiting for GPS...','yellow');
+  }catch(e){setStatus('Camera denied — GPS-only mode.');}
+  if(!navigator.geolocation){setStatus('GPS unavailable.');return;}
+  gpsWatcher=navigator.geolocation.watchPosition(pos=>{
+    userLat=pos.coords.latitude; userLon=pos.coords.longitude;
+    gpsBadge.textContent=userLat.toFixed(4)+', '+userLon.toFixed(4);
+    if(Prefs.get('showGps')){
+      gpsBadge.classList.add('visible');
+    } else {
+      gpsBadge.classList.remove('visible');
+    }
+    if(!gpsLocked){
+      gpsLocked=true;
+      catchBtn.classList.add('ready');
+      compassBtn.classList.add('show');
+      setStatus('GPS locked — scanning...','blue');
+    }
+    // Keep the map centered on the user as GPS updates
+    if(leafletMap){leafletMap.setView([userLat,userLon],leafletMap.getZoom(),{animate:false});}
+    if(!pollInterval){fetchFlights();pollInterval=setInterval(fetchFlights,20000);}
+  },err=>setStatus('GPS error: '+err.message),{enableHighAccuracy:true,maximumAge:5000});
+}
+
+/* ── CAMERA ZOOM ──
+   Pinch the viewfinder to zoom. Tries native hardware zoom first
+   (Safari 17+, ultra-wide/telephoto lenses), falls back to a CSS
+   transform on the <video> element which is "digital zoom" — cheap
+   pixels, quality degrades past ~2x but always works.
+   Single-finger touches still work for the catch button etc.
+   During an active pinch we suppress catch taps to avoid accidents. */
+let zoomInteractionActive=false;
+
+function applyZoom(z){
+  z = Math.max(1, z);
+  if(nativeZoomAvailable){
+    const native = Math.max(nativeZoomMin, Math.min(nativeZoomMax, z));
+    try{
+      cameraTrack.applyConstraints({advanced:[{zoom: native}]}).catch(()=>{});
+    }catch(e){}
+    // If user wants more zoom than the lens supports, layer CSS on top
+    const extra = Math.max(1, z/nativeZoomMax);
+    video.style.transform = extra>1 ? `scale(${Math.min(extra,MAX_DIGITAL_ZOOM)})` : '';
+    video.style.transformOrigin = 'center center';
+  } else {
+    const z2 = Math.min(z, MAX_DIGITAL_ZOOM);
+    video.style.transform = z2>1 ? `scale(${z2})` : '';
+    video.style.transformOrigin = 'center center';
+  }
+  currentZoom = z;
+  updateZoomBadge();
+}
+
+function updateZoomBadge(){
+  const badge = document.getElementById('zoom-badge');
+  if(!badge)return;
+  if(currentZoom <= 1.01){
+    badge.classList.remove('visible');
+  } else {
+    badge.textContent = currentZoom.toFixed(1)+'×';
+    badge.classList.add('visible');
+  }
+}
+
+(function wireCameraPinch(){
+  const vf = document.getElementById('viewfinder');
+  if(!vf)return;
+  let startDist=0, startZoom=1;
+  vf.addEventListener('touchstart',(e)=>{
+    if(e.touches.length===2){
+      zoomInteractionActive=true;
+      const dx=e.touches[0].clientX-e.touches[1].clientX;
+      const dy=e.touches[0].clientY-e.touches[1].clientY;
+      startDist=Math.hypot(dx,dy);
+      startZoom=currentZoom;
+      // Block the catch button while two fingers are down
+      catchBtn.style.pointerEvents='none';
+      if(e.cancelable)e.preventDefault();
+    }
+  },{passive:false});
+  vf.addEventListener('touchmove',(e)=>{
+    if(e.touches.length!==2 || !zoomInteractionActive)return;
+    const dx=e.touches[0].clientX-e.touches[1].clientX;
+    const dy=e.touches[0].clientY-e.touches[1].clientY;
+    const dist=Math.hypot(dx,dy);
+    if(startDist>0){
+      const ratio = dist/startDist;
+      const cap = nativeZoomAvailable ? Math.max(nativeZoomMax*1.5, MAX_DIGITAL_ZOOM) : MAX_DIGITAL_ZOOM;
+      const z = Math.max(1, Math.min(cap, startZoom * ratio));
+      applyZoom(z);
+    }
+    if(e.cancelable)e.preventDefault();
+  },{passive:false});
+  vf.addEventListener('touchend',(e)=>{
+    if(e.touches.length<2 && zoomInteractionActive){
+      zoomInteractionActive=false;
+      // Give a small delay before re-enabling the catch button so a
+      // lifting-fingers tap doesn't immediately fire a catch
+      setTimeout(()=>{ catchBtn.style.pointerEvents=''; }, 250);
+    }
+  });
+  // Double-tap to reset zoom
+  let lastTap=0;
+  vf.addEventListener('touchend',(e)=>{
+    if(e.touches.length!==0 || e.changedTouches.length!==1)return;
+    if(zoomInteractionActive)return;
+    const now=Date.now();
+    if(now-lastTap < 300 && currentZoom>1.01){
+      applyZoom(1);
+    }
+    lastTap=now;
+  });
+})();
+
+/* ── COMPASS ── */
+function compassHandler(e){
+  if(e.webkitCompassHeading!=null){
+    deviceHeading=e.webkitCompassHeading;
+  } else if(e.alpha!=null){
+    deviceHeading=(360-e.alpha)%360;
+  }
+}
+
+function toggleCompass(){
+  if(compassEnabled){
+    stopCompass();
+  } else {
+    enableCompass();
+  }
+}
+
+function enableCompass(){
+  if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
+    DeviceOrientationEvent.requestPermission().then(state=>{
+      if(state==='granted'){startCompass();}
+      else{setStatus('Compass permission denied.');}
+    }).catch(()=>setStatus('Compass unavailable.'));
+  } else {
+    startCompass();
+  }
+}
+
+function startCompass(){
+  compassEnabled=true;
+  compassBtn.textContent='🧭 Compass on';
+  compassBtn.classList.add('active');
+  window.addEventListener('deviceorientation',compassHandler,true);
+  resizeCanvas();
+  requestAnimationFrame(drawCompass);
+}
+
+function stopCompass(){
+  compassEnabled=false;
+  deviceHeading=0;
+  compassBtn.textContent='🧭 Enable compass';
+  compassBtn.classList.remove('active');
+  window.removeEventListener('deviceorientation',compassHandler,true);
+  // Clear the compass overlay on the viewfinder
+  if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function resizeCanvas(){
+  const vf=document.getElementById('viewfinder');
+  canvas.width=vf.offsetWidth;
+  canvas.height=vf.offsetHeight;
+}
+
+function bearingTo(lat2,lon2){
+  const toRad=d=>d*Math.PI/180;
+  const toDeg=r=>r*180/Math.PI;
+  const dLon=toRad(lon2-userLon);
+  const lat1=toRad(userLat),lat2r=toRad(lat2);
+  const y=Math.sin(dLon)*Math.cos(lat2r);
+  const x=Math.cos(lat1)*Math.sin(lat2r)-Math.sin(lat1)*Math.cos(lat2r)*Math.cos(dLon);
+  return(toDeg(Math.atan2(y,x))+360)%360;
+}
+
+function drawCompass(){
+  if(!compassEnabled){requestAnimationFrame(drawCompass);return;}
+  resizeCanvas();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!gpsLocked||!overheadFlights.length||userLat===null){requestAnimationFrame(drawCompass);return;}
+
+  const cx=canvas.width/2, cy=canvas.height/2;
+  const r=Math.min(canvas.width,canvas.height)*0.38;
+
+  // Draw arc guide
+  ctx.beginPath();
+  ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,0.08)';
+  ctx.lineWidth=1;
+  ctx.stroke();
+
+  // Draw each catchable aircraft as a direction indicator
+  overheadFlights.forEach(ac=>{
+    if(ac._grounded)return; // Spot tab is sky-only; grounded show only on the map
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    if(isNaN(flat)||isNaN(flon))return;
+    const bearing=bearingTo(flat,flon);
+    const relAngle=((bearing-deviceHeading+360)%360)*Math.PI/180 - Math.PI/2;
+    const px=cx+r*Math.cos(relAngle);
+    const py=cy+r*Math.sin(relAngle);
+    const alt=parseInt(ac.alt_baro)||0;
+    const isClose=alt<3000;
+
+    // Dot
+    ctx.beginPath();
+    ctx.arc(px,py,isClose?7:5,0,Math.PI*2);
+    ctx.fillStyle=isClose?'rgba(74,222,128,0.9)':'rgba(250,204,21,0.75)';
+    ctx.fill();
+
+    // Label
+    const label=(ac.flight||ac.r||'').trim().substring(0,6);
+    if(label){
+      ctx.font='bold 10px -apple-system,sans-serif';
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.textAlign='center';
+      ctx.fillText(label,px,py-12);
+    }
+
+    // Arrow from center toward aircraft
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+(px-cx)*0.7,cy+(py-cy)*0.7);
+    ctx.strokeStyle=isClose?'rgba(74,222,128,0.3)':'rgba(250,204,21,0.2)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  });
+
+  requestAnimationFrame(drawCompass);
+}
+
+/* ── FETCH ── */
+function distanceMi(lat1,lon1,lat2,lon2){
+  const toRad=d=>d*Math.PI/180;
+  const R=3958.8;
+  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+
+// Endpoint strategy: try direct first (zero proxy = max reliability), fall back to public proxies.
+// Order matters — corslol has been more reliable than corsfix in practice, so try it first.
+// Track which one is currently working so we don't waste calls on dead ones each poll.
+const FETCH_ENDPOINTS = [
+  { name:'direct',     wrap: u => u },
+  { name:'corslol',    wrap: u => `https://api.cors.lol/?url=${encodeURIComponent(u)}` },
+  { name:'corsfix',    wrap: u => `https://proxy.corsfix.com/?${u}` },
+  { name:'allorigins', wrap: u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}` },
+];
+let preferredEndpointIdx = 0;
+let lastFetchErr = '';
+let consecutiveFetchFailures = 0;
+let firstFetchAttemptAt = 0;
+const STARTUP_GRACE_MS = 25000; // first ~25s after start, treat failures as "still searching"
+
+async function fetchFlights(){
+  if(userLat===null)return;
+  if(!firstFetchAttemptAt)firstFetchAttemptAt=Date.now();
+  const lat=userLat.toFixed(4),lon=userLon.toFixed(4);
+  const apiUrl=`https://api.adsb.lol/v2/lat/${lat}/lon/${lon}/dist/${RADIUS_MI}`;
+
+  // Try preferred endpoint first, then walk the list if it fails
+  let data=null, usedEndpoint=null, errSummary='';
+  const order = [];
+  for(let i=0;i<FETCH_ENDPOINTS.length;i++){
+    order.push((preferredEndpointIdx+i)%FETCH_ENDPOINTS.length);
+  }
+  for(const idx of order){
+    const ep=FETCH_ENDPOINTS[idx];
+    try{
+      const res=await fetch(ep.wrap(apiUrl),{cache:'no-store'});
+      if(!res.ok){errSummary=ep.name+' HTTP '+res.status; continue;}
+      data=await res.json();
+      usedEndpoint=ep.name;
+      preferredEndpointIdx=idx;
+      break;
+    }catch(e){
+      errSummary=ep.name+' '+(e&&e.message?e.message.substring(0,40):'failed');
+      continue;
+    }
+  }
+  if(!data){
+    lastFetchErr=errSummary;
+    consecutiveFetchFailures++;
+    const sinceStart = Date.now() - firstFetchAttemptAt;
+    // Three-tier honesty: startup grace → soft retry → real warning.
+    // Never leak proxy names to the user; they're meaningless.
+    if(sinceStart < STARTUP_GRACE_MS){
+      setStatus('Searching for aircraft...','yellow');
+    } else if(consecutiveFetchFailures < 3){
+      setStatus('Still searching...','yellow');
+    } else {
+      setStatus('Connection trouble — will keep retrying.','red');
+    }
+    return;
+  }
+  // Success — clear failure state
+  consecutiveFetchFailures=0;
+  if(lastFetchErr){lastFetchErr='';}
+
+  const all=data.ac||[];
+
+  mapFlights=all.filter(ac=>{
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    if(isNaN(flat)||isNaN(flon))return false;
+    const grounded=ac.gnd==='1'||ac.gnd===true||ac.alt_baro==='ground';
+    if(grounded){ac._grounded=true; return true;}
+    const alt=parseInt(ac.alt_baro);
+    ac._grounded=false;
+    return !isNaN(alt)&&alt<=MAP_MAX_ALT_FT;
+  });
+
+  overheadFlights=mapFlights.filter(ac=>{
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    const d=distanceMi(userLat,userLon,flat,flon);
+    if(ac._grounded) return d<=GROUND_CATCH_RADIUS_MI;
+    const alt=parseInt(ac.alt_baro);
+    if(alt>getMaxAltFt())return false;
+    return d<=getCatchRadiusMi();
+  });
+
+  const catchable=overheadFlights.length;
+  const nonCatchable=mapFlights.length-catchable;
+  overheadCount.textContent=catchable;
+  overheadBar.classList.add('visible');
+  const now=new Date();
+  const timeStr=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const srcTag = ''; // proxy names are implementation detail; don't leak to UI
+  if(Prefs.get('showUpdated')){
+    lastScanned.textContent='Updated '+timeStr
+      +(nonCatchable>0?` · ${nonCatchable} out of reach`:'')+srcTag;
+    lastScanned.style.display='';
+  } else {
+    lastScanned.textContent='';
+    lastScanned.style.display='none';
+  }
+  document.getElementById('map-catchable-count').textContent=catchable;
+  document.getElementById('map-high-count').textContent=nonCatchable;
+  document.getElementById('map-timestamp').textContent='Last updated '+timeStr+srcTag;
+  if(document.getElementById('tab-nearby').classList.contains('active')){
+    renderNearbyTab();
+  }
+  if(catchable>0){setStatus(catchable+' aircraft in range — tally now!','green');}
+  else if(mapFlights.length>0){setStatus(mapFlights.length+' nearby but out of tally range.','');}
+  else{setStatus('Nothing in range right now.','');}
+}
+
+/* ── MANUAL REFRESH (debounced) ── */
+let lastManualRefresh=0;
+const MANUAL_REFRESH_DEBOUNCE_MS=3000;
+async function manualRefresh(){
+  const now=Date.now();
+  if(now-lastManualRefresh<MANUAL_REFRESH_DEBOUNCE_MS)return;
+  if(!gpsLocked)return;
+  lastManualRefresh=now;
+  const btn=document.getElementById('map-refresh-btn');
+  if(btn)btn.classList.add('refreshing');
+  await fetchFlights();
+  if(btn)setTimeout(()=>btn.classList.remove('refreshing'),400);
+}
+
+/* ── MATCH ── */
+function bestMatch(){
+  if(!overheadFlights.length)return null;
+  let best=null,bestDist=Infinity;
+  for(const ac of overheadFlights){
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    if(isNaN(flat)||isNaN(flon))continue;
+    const icao=(ac.hex||'').toUpperCase();
+    if(recentCatches[icao]&&Date.now()-recentCatches[icao]<getCooldownMs())continue;
+    const d=Math.hypot(flat-userLat,flon-userLon);
+    if(d<bestDist){bestDist=d;best=ac;}
+  }
+  return best;
+}
+
+function fmt(val,suffix){
+  return(val===null||val===undefined||val===''||val==='0'||val===0)?'—':String(val)+(suffix||'');
+}
+
+function buildData(ac){
+  const callsign=(ac.flight||ac.r||'UNKNOWN').trim();
+  const onGround=ac.gnd==='1'||ac.gnd===true;
+  const altRaw=ac.alt_baro;
+  const alt=altRaw&&altRaw!=='ground'?parseInt(altRaw).toLocaleString()+' ft':(onGround?'On ground':'—');
+  const altNum=parseInt(altRaw);
+  const now=new Date();
+  const typeCode=fmt(ac.t);
+  const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+  let distanceAtCatch=null, bearingAtCatch=null;
+  if(!isNaN(flat)&&!isNaN(flon)&&userLat!==null){
+    distanceAtCatch = distanceMi(userLat,userLon,flat,flon);
+    bearingAtCatch  = bearingTo(flat,flon);
+  }
+  const regVal=fmt(ac.r);
+  const mil=detectMilitary(ac);
+  return{
+    callsign,alt,
+    altNum: isNaN(altNum)?null:altNum,
+    type:typeCode,
+    typeName: fullAircraftName(typeCode),
+    category: aircraftCategory(typeCode),
+    reg:regVal,
+    country: countryFromReg(regVal),
+    age: null, // populated async via enrichAge()
+    built_year: null,
+    spd:ac.gs?Math.round(parseFloat(ac.gs))+' kts':'—',
+    heading:ac.track?Math.round(parseFloat(ac.track))+'°':'—',
+    squawk:fmt(ac.squawk), origin:fmt(ac.orig), dest:fmt(ac.dest),
+    origin_name:null, dest_name:null,
+    operator:fmt(ac.ownOp||ac.op), icao:(ac.hex||'—').toUpperCase(),
+    distanceAtCatch: distanceAtCatch===null?null:Math.round(distanceAtCatch*10)/10, // 1 decimal mi
+    bearingAtCatch:  bearingAtCatch===null?null:Math.round(bearingAtCatch),
+    time:now.toLocaleTimeString(), date:now.toLocaleDateString(),
+    // Military detection
+    isMil: mil.isMil,
+    milBranch: mil.branch,
+    milConfidence: mil.confidence,
+    milAirframeOnly: mil.airframeOnly,
+    milSignals: mil.signals
+  };
+}
+
+function calcConfidence(d){
+  const filled=[d.type,d.reg,d.operator,d.alt].filter(v=>v&&v!=='—').length;
+  const pct=filled/4;
+  if(pct>=0.75)return{level:'high',label:'Good data — strong match'};
+  if(pct>=0.5)return{level:'medium',label:'Partial data — moderate confidence'};
+  return{level:'low',label:'Minimal data returned'};
+}
+
+/* ── PHOTO FETCH ── */
+async function fetchAircraftPhoto(icao, reg){
+  const queries=[icao,reg].filter(v=>v&&v!=='—');
+  for(const q of queries){
+    try{
+      const url=`https://api.planespotters.net/pub/photos/hex/${q}`;
+      const res=await fetch(url);
+      if(!res.ok)continue;
+      const data=await res.json();
+      const photo=data.photos&&data.photos[0];
+      if(photo&&photo.thumbnail_large&&photo.thumbnail_large.src){
+        return{src:photo.thumbnail_large.src,credit:photo.photographer||'Planespotters.net'};
+      }
+    }catch(e){}
+  }
+  return null;
+}
+
+/* ── STOCK PHOTO DOWNLOAD ──
+   Attempt to download a stock photo as a Blob so the catch survives offline
+   and isn't dependent on Planespotters CDN persistence. CORS is the risk:
+   if the CDN doesn't allow cross-origin fetch, we keep the URL as a fallback. */
+async function downloadStockPhoto(url){
+  if(!url)return null;
+  try{
+    const res = await fetch(url, {mode:'cors'});
+    if(!res.ok)return null;
+    const blob = await res.blob();
+    if(blob && blob.size>0) return blob;
+  }catch(e){
+    // CORS-blocked or network — caller will keep URL-only and accept fragility
+  }
+  return null;
+}
+
+/* ── ROUTE ENRICHMENT ──
+   The /v2/lat/lon/dist endpoint rarely populates origin/dest.
+   We do a separate lookup by callsign post-catch:
+     1. adsb.lol route API (free, no key)
+     2. adsbdb.com (free, no key) as fallback
+   Returns {origin, dest, origin_name, dest_name} or null. */
+async function fetchRoute(callsign){
+  if(!callsign||callsign==='UNKNOWN'||callsign==='—')return null;
+  const cs=callsign.trim().toUpperCase();
+  // Try adsb.lol first
+  try{
+    const res=await fetch(`https://api.adsb.lol/api/0/route/${encodeURIComponent(cs)}`);
+    if(res.ok){
+      const data=await res.json();
+      // adsb.lol returns {_airport_codes_iata: "KLAX-KJFK"} or similar
+      const codes = data._airport_codes_iata||data.airport_codes||'';
+      if(codes && codes.includes('-')){
+        const parts=codes.split('-');
+        if(parts.length>=2){
+          return{
+            origin: parts[0],
+            dest: parts[parts.length-1],
+            origin_name: (data._airports&&data._airports[0]&&data._airports[0].name)||null,
+            dest_name: (data._airports&&data._airports[data._airports.length-1]&&data._airports[data._airports.length-1].name)||null
+          };
+        }
+      }
+    }
+  }catch(e){}
+  // Fallback: adsbdb.com
+  try{
+    const res=await fetch(`https://api.adsbdb.com/v0/callsign/${encodeURIComponent(cs)}`);
+    if(res.ok){
+      const data=await res.json();
+      const fr=data&&data.response&&data.response.flightroute;
+      if(fr){
+        return{
+          origin: (fr.origin&&(fr.origin.iata_code||fr.origin.icao_code))||null,
+          dest:   (fr.destination&&(fr.destination.iata_code||fr.destination.icao_code))||null,
+          origin_name: (fr.origin&&fr.origin.name)||null,
+          dest_name:   (fr.destination&&fr.destination.name)||null
+        };
+      }
+    }
+  }catch(e){}
+  return null;
+}
+
+/* ── AIRCRAFT ENRICHMENT (best-effort age) ──
+   adsbdb.com sometimes returns manufacture year for a given ICAO hex.
+   We try the hex endpoint first, then fall back to nothing if missing. */
+async function fetchAircraftDetails(icao24){
+  if(!icao24||icao24==='—')return null;
+  try{
+    const res=await fetch(`https://api.adsbdb.com/v0/aircraft/${encodeURIComponent(icao24)}`);
+    if(!res.ok)return null;
+    const data=await res.json();
+    const ac=data&&data.response&&data.response.aircraft;
+    if(!ac)return null;
+    // Field name in adsbdb is `manufactured` (YYYY string or year)
+    let year = null;
+    if(ac.manufactured){
+      const m=String(ac.manufactured).match(/(\d{4})/);
+      if(m)year=parseInt(m[1]);
+    }
+    return{
+      manufactured: year,
+      registered_owner: ac.registered_owner||null,
+      registered_owner_country_name: ac.registered_owner_country_name||null
+    };
+  }catch(e){return null;}
+}
+
+/* ── DUPLICATE CHECK ── */
+function isDuplicate(icao){
+  const catches=loadCatches();
+  return catches.some(c=>c.icao===icao);
+}
+
+function showDupModal(data,onConfirm){
+  pendingDupData=data;
+  document.getElementById('dup-title').textContent='Already tallied '+data.callsign;
+  document.getElementById('dup-msg').textContent=
+    'You already have '+data.callsign+' in your log. Tally it again anyway?';
+  document.getElementById('dup-again-btn').onclick=()=>{closeDupModal();onConfirm();};
+  document.getElementById('dup-modal').classList.add('open');
+}
+function closeDupModal(){document.getElementById('dup-modal').classList.remove('open');}
+
+/* ── SETTINGS MODAL ── */
+function openSettings(){
+  syncSettingsUI();
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettings(){
+  document.getElementById('settings-modal').classList.remove('open');
+  // Apply any prefs that affect always-on UI elements
+  applyPrefsToLiveUI();
+}
+
+// Read all prefs and reflect them in the modal controls
+function syncSettingsUI(){
+  // Toggles
+  document.querySelectorAll('.settings-toggle[data-pref]').forEach(btn=>{
+    const key=btn.getAttribute('data-pref');
+    const on=!!Prefs.get(key);
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', String(on));
+  });
+  // Sliders
+  document.querySelectorAll('.settings-slider[data-pref]').forEach(input=>{
+    const key=input.getAttribute('data-pref');
+    input.value = Prefs.get(key);
+    updateSliderLabel(key, input.value);
+  });
+}
+
+function updateSliderLabel(key, val){
+  const v=parseInt(val);
+  if(key==='catchRadius'){
+    document.getElementById('pref-catchRadius-val').textContent = v+' mi';
+  } else if(key==='maxAlt'){
+    document.getElementById('pref-maxAlt-val').textContent = v.toLocaleString()+' ft';
+  } else if(key==='cooldown'){
+    document.getElementById('pref-cooldown-val').textContent = v===0 ? 'Off' : v+' s';
+  }
+}
+
+// Wire toggle + slider events on first load (delegated; cheap)
+document.addEventListener('click', e=>{
+  const t=e.target.closest('.settings-toggle[data-pref]');
+  if(!t)return;
+  const key=t.getAttribute('data-pref');
+  const newVal=!Prefs.get(key);
+  Prefs.set(key, newVal);
+  t.classList.toggle('on', newVal);
+  t.setAttribute('aria-pressed', String(newVal));
+  applyPrefsToLiveUI();
+});
+document.addEventListener('input', e=>{
+  const s=e.target.closest('.settings-slider[data-pref]');
+  if(!s)return;
+  const key=s.getAttribute('data-pref');
+  const val=parseInt(s.value);
+  Prefs.set(key, val);
+  updateSliderLabel(key, val);
+  // Slider changes take effect next poll; don't force a fetch
+});
+
+// Apply prefs that change immediately-visible UI (badges, etc.)
+function applyPrefsToLiveUI(){
+  // GPS badge
+  if(gpsLocked){
+    if(Prefs.get('showGps')) gpsBadge.classList.add('visible');
+    else gpsBadge.classList.remove('visible');
+  }
+  // last-scanned text — let next fetch update naturally, but hide immediately if turned off
+  if(!Prefs.get('showUpdated')){
+    lastScanned.textContent='';
+    lastScanned.style.display='none';
+  } else {
+    lastScanned.style.display='';
+  }
+}
+
+// Destructive actions with confirmation
+function confirmClearCatches(){
+  if(confirm('Delete all '+loadCatches().length+' tallies? This cannot be undone.')){
+    localStorage.removeItem('spotter_catches');
+    PhotoStore.clear().catch(()=>{});
+    updateBadges();
+    if(document.getElementById('tab-log').classList.contains('active'))renderLogTab();
+    closeSettings();
+    setStatus('All tallies cleared.','');
+  }
+}
+function confirmClearPhotos(){
+  if(confirm('Clear all photos from storage? Tally data stays, but photos disappear from log entries.')){
+    PhotoStore.clear().then(()=>{
+      setStatus('Photo cache cleared.','');
+      if(document.getElementById('tab-log').classList.contains('active'))renderLogTab();
+    });
+  }
+}
+function confirmRestoreDefaults(){
+  if(confirm('Restore all settings to defaults? Your tallies are not affected.')){
+    Prefs.reset();
+    syncSettingsUI();
+    applyPrefsToLiveUI();
+  }
+}
+
+/* ── CATCH ── */
+catchBtn.addEventListener('click',async()=>{
+  if(catching||!gpsLocked)return;
+  catching=true;
+  setStatus('Tallying...','yellow');
+
+  // Capture photo IMMEDIATELY — before any async work that might delay the moment.
+  // We don't know yet which aircraft this is, but the photo is "what the camera saw at catch time."
+  let capturedBlob=null;
+  try{
+    capturedBlob = await PhotoStore.captureFromVideo(video);
+  }catch(e){
+    console.warn('Photo capture failed:',e);
+  }
+
+  if(!overheadFlights.length)await fetchFlights();
+  const match=bestMatch();
+  if(!match){
+    setStatus('No tally — sky is clear.','red');
+    catching=false;
+    return;
+  }
+  const d=buildData(match);
+  // Unique ID per catch event (so re-catching same aircraft = separate log entry/photo)
+  d.catchId = d.icao + '_' + Date.now();
+  recentCatches[d.icao]=Date.now();
+  catchBtn.classList.add('cooldown');
+  setTimeout(()=>catchBtn.classList.remove('cooldown'),getCooldownMs());
+
+  // Persist photo under the catchId (fire-and-forget; UI uses the blob directly for preview)
+  if(capturedBlob){
+    d.hasCapturedPhoto = true;
+    PhotoStore.put(d.catchId, capturedBlob).catch(e=>console.warn('Photo save failed:',e));
+    // Stash a local object URL for immediate use on the verify card
+    d._capturedPhotoURL = PhotoStore.toObjectURL(capturedBlob);
+  }
+
+  // Fire route enrichment async — modal will update fields when it lands.
+  // Most GA flights won't have a route; that's expected.
+  // The route may land BEFORE or AFTER the user confirms/discards. We handle both.
+  d._routeLoading = true;
+  fetchRoute(d.callsign).then(route=>{
+    d._routeLoading = false;
+    if(route){
+      if(route.origin)d.origin=route.origin;
+      if(route.dest)d.dest=route.dest;
+      if(route.origin_name)d.origin_name=route.origin_name;
+      if(route.dest_name)d.dest_name=route.dest_name;
+    }
+    // Case A: modal still up showing this catch — refresh live.
+    if(confirmPending===d){
+      const setRow=(label,val)=>{
+        const sheet=document.getElementById('confirm-sheet');
+        if(!sheet)return;
+        sheet.querySelectorAll('.card-row').forEach(row=>{
+          const labelEl=row.querySelector('.card-label');
+          const valEl=row.querySelector('.card-value');
+          if(labelEl&&valEl&&labelEl.textContent===label){valEl.textContent=val;}
+        });
+      };
+      setRow('Origin', d.origin&&d.origin!=='—' ? (d.origin_name? d.origin+' · '+d.origin_name : d.origin) : '—');
+      setRow('Destination', d.dest&&d.dest!=='—' ? (d.dest_name? d.dest+' · '+d.dest_name : d.dest) : '—');
+    }
+    // Case B: catch was already confirmed and saved — patch the persisted entry.
+    if(route && d.catchId){
+      const catches=loadCatches();
+      const idx=catches.findIndex(c=>c.catchId===d.catchId);
+      if(idx>=0){
+        if(route.origin)catches[idx].origin=route.origin;
+        if(route.dest)catches[idx].dest=route.dest;
+        if(route.origin_name)catches[idx].origin_name=route.origin_name;
+        if(route.dest_name)catches[idx].dest_name=route.dest_name;
+        saveCatches(catches);
+        // If Log tab is currently visible, re-render so the user sees the update
+        if(document.getElementById('tab-log').classList.contains('active')){
+          renderLogTab();
+        }
+      }
+    }
+    // Case C: catch was discarded — d.catchId not in log, photo already deleted. Nothing to do.
+  }).catch(()=>{ d._routeLoading=false; });
+
+  // Parallel: enrich with aircraft details (age, registered owner) by ICAO hex.
+  // Same dual-path: update modal if open, patch saved catch if confirmed.
+  d._detailsLoading = true;
+  fetchAircraftDetails(d.icao).then(det=>{
+    d._detailsLoading = false;
+    if(!det)return;
+    if(det.manufactured){
+      d.built_year = det.manufactured;
+      const thisYear = new Date().getFullYear();
+      d.age = Math.max(0, thisYear - det.manufactured);
+    }
+    if(det.registered_owner && (!d.operator || d.operator==='—')){
+      d.operator = det.registered_owner;
+    }
+    if(det.registered_owner_country_name && !d.country){
+      d.country = det.registered_owner_country_name;
+    }
+    // Update live modal if open
+    if(confirmPending===d){
+      const setRow=(label,val)=>{
+        const sheet=document.getElementById('confirm-sheet');
+        if(!sheet)return;
+        sheet.querySelectorAll('.card-row').forEach(row=>{
+          const labelEl=row.querySelector('.card-label');
+          const valEl=row.querySelector('.card-value');
+          if(labelEl&&valEl&&labelEl.textContent===label){valEl.textContent=val;}
+        });
+      };
+      if(d.built_year)setRow('Built', d.built_year+(d.age!=null?' · '+d.age+' yrs old':''));
+      if(d.country)setRow('Country', d.country);
+      setRow('Operator', d.operator);
+    }
+    // Patch saved entry if already confirmed
+    if(d.catchId){
+      const catches=loadCatches();
+      const idx=catches.findIndex(c=>c.catchId===d.catchId);
+      if(idx>=0){
+        if(d.built_year)catches[idx].built_year=d.built_year;
+        if(d.age!=null)catches[idx].age=d.age;
+        if(det.registered_owner)catches[idx].operator=det.registered_owner;
+        if(d.country)catches[idx].country=d.country;
+        saveCatches(catches);
+        if(document.getElementById('tab-log').classList.contains('active')){
+          renderLogTab();
+        }
+      }
+    }
+  }).catch(()=>{ d._detailsLoading=false; });
+
+  const proceed=()=>{
+    setStatus('Tally on '+d.callsign+'!','green');
+    openConfirmModal(d);
+  };
+
+  if(isDuplicate(d.icao)){
+    catching=false;
+    showDupModal(d,proceed);
+  } else {
+    proceed();
+    catching=false;
+  }
+});
+catchBtn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')catchBtn.click();});
+
+/* ── CONFIRM CATCH MODAL (replaces old Verify tab) ── */
+let confirmPending=null;
+
+function openConfirmModal(d){
+  confirmPending=d;
+  const conf=calcConfidence(d);
+  const sheet=document.getElementById('confirm-sheet');
+  sheet.innerHTML='';
+
+  const card=document.createElement('div');
+  card.className='verify-card';
+
+  const photoPlaceholder=document.createElement('div');
+  photoPlaceholder.className='aircraft-photo-placeholder';
+  photoPlaceholder.textContent=d._capturedPhotoURL?'Your shot':'Loading photo...';
+  card.appendChild(photoPlaceholder);
+
+  if(d._capturedPhotoURL){
+    const img=document.createElement('img');
+    img.className='aircraft-photo';
+    img.src=d._capturedPhotoURL;
+    img.alt=d.callsign;
+    img.onload=()=>{
+      photoPlaceholder.replaceWith(img);
+      const credit=document.createElement('div');
+      credit.className='photo-credit';
+      credit.textContent='Your tally · '+d.date+' '+d.time;
+      img.insertAdjacentElement('afterend',credit);
+    };
+    img.onerror=()=>{photoPlaceholder.textContent='Photo failed to render';};
+  }
+
+  const inner=document.createElement('div');
+  inner.className='verify-inner';
+  const typeLine = d.typeName ? d.typeName + (d.type&&d.type!=='—'?' · '+d.type:'') : (d.type||'—');
+  const loadingHint = d._routeLoading ? 'Looking up…' : '—';
+  const originLine = d.origin&&d.origin!=='—' ? (d.origin_name ? d.origin+' · '+d.origin_name : d.origin) : loadingHint;
+  const destLine   = d.dest  &&d.dest  !=='—' ? (d.dest_name   ? d.dest  +' · '+d.dest_name   : d.dest  ) : loadingHint;
+  // Military pill + branch row
+  const milPill = d.isMil
+    ? `<span class="mil-pill-lg${d.milAirframeOnly?' airframe-only':''}">${d.milAirframeOnly?'MIL airframe':'MIL'}</span>`
+    : '';
+  const branchRow = d.isMil
+    ? `<div class="card-row"><span class="card-label">Branch</span><span class="card-value">${d.milBranch||'Military'}</span></div>`
+    : '';
+  // If we have a branch, surface it in the operator slot when operator field is empty/generic
+  const operatorVal = (d.isMil && (!d.operator||d.operator==='—') && d.milBranch)
+    ? d.milBranch
+    : (d.operator||'—');
+  inner.innerHTML=`
+    <div class="verify-callsign">${d.callsign}${milPill}</div>
+    <div class="verify-subtitle">${typeLine} · ${d.date} ${d.time}</div>
+    <div class="card-row"><span class="card-label">Aircraft type</span><span class="card-value">${typeLine}</span></div>
+    <div class="card-row"><span class="card-label">Registration</span><span class="card-value">${d.reg}</span></div>
+    ${branchRow}
+    <div class="card-row"><span class="card-label">Operator</span><span class="card-value">${operatorVal}</span></div>
+    <div class="card-row"><span class="card-label">Origin</span><span class="card-value">${originLine}</span></div>
+    <div class="card-row"><span class="card-label">Destination</span><span class="card-value">${destLine}</span></div>
+    <div class="card-row"><span class="card-label">Altitude</span><span class="card-value">${d.alt}</span></div>
+    <div class="card-row"><span class="card-label">Speed</span><span class="card-value">${d.spd}</span></div>
+    <div class="card-row"><span class="card-label">Heading</span><span class="card-value">${d.heading}</span></div>
+    <div class="card-row"><span class="card-label">Squawk</span><span class="card-value">${d.squawk}</span></div>
+    <div class="card-row"><span class="card-label">ICAO 24</span><span class="card-value">${d.icao}</span></div>`;
+  card.appendChild(inner);
+
+  const confBar=document.createElement('div');
+  confBar.className='confidence-bar';
+  confBar.innerHTML=`<div class="conf-dot ${conf.level}"></div>
+    <div class="conf-label"><strong>Confidence: ${conf.level.charAt(0).toUpperCase()+conf.level.slice(1)}</strong>${conf.label}</div>`;
+
+  const actions=document.createElement('div');
+  actions.className='verify-actions';
+  const confirmBtn=document.createElement('button');
+  confirmBtn.className='btn-confirm';
+  confirmBtn.textContent='Confirm';
+  confirmBtn.onclick=()=>{
+    const catches=loadCatches();
+    const toSave={...d,confidence:conf.level,
+      photoSrc: confirmPending.photoSrc||null,
+      photoCredit: confirmPending.photoCredit||null,
+      hasStockBlob: confirmPending.hasStockBlob||false
+    };
+    delete toSave._capturedPhotoURL;
+    delete toSave._routeLoading;
+    delete toSave._detailsLoading;
+    catches.push(toSave);
+    saveCatches(catches);
+    closeConfirmModal(true);
+    updateBadges();
+    setStatus(d.callsign+' logged.','green');
+  };
+  const dismissBtn=document.createElement('button');
+  dismissBtn.className='btn-dismiss';
+  dismissBtn.textContent='Discard';
+  dismissBtn.onclick=()=>{
+    if(d.catchId){
+      PhotoStore.del(d.catchId).catch(()=>{});
+      PhotoStore.del(d.catchId+'_stock').catch(()=>{});
+    }
+    if(d._capturedPhotoURL)URL.revokeObjectURL(d._capturedPhotoURL);
+    closeConfirmModal(false);
+    setStatus('Catch discarded.','');
+  };
+  actions.appendChild(confirmBtn);
+  actions.appendChild(dismissBtn);
+
+  sheet.appendChild(card);
+  sheet.appendChild(confBar);
+  sheet.appendChild(actions);
+  document.getElementById('confirm-modal').classList.add('open');
+
+  // Always fetch the stock photo — it appears in the expanded log card as a reference.
+  // If we have a captured photo, the stock photo is supplementary; if not, it's the fallback.
+  fetchAircraftPhoto(d.icao,d.reg).then(async photo=>{
+    if(!photo){
+      // Only show "no photo" placeholder if we don't have a captured photo either
+      if(!d._capturedPhotoURL && photoPlaceholder.isConnected){
+        photoPlaceholder.textContent='No photo available';
+      }
+      return;
+    }
+    // Remember the URL on the catch data so we can show it on the log card too
+    if(confirmPending){
+      confirmPending.photoSrc=photo.src;
+      confirmPending.photoCredit=photo.credit;
+    }
+    // Try to download as a blob so it survives offline / CDN changes — unless user opted out
+    if(Prefs.get('savePhotos')){
+      const blob = await downloadStockPhoto(photo.src);
+      if(blob && d.catchId){
+        try{
+          await PhotoStore.put(d.catchId+'_stock', blob);
+          if(confirmPending)confirmPending.hasStockBlob=true;
+        }catch(e){ /* storage full or other — keep URL only */ }
+      }
+    }
+    // If there's no captured photo, replace the placeholder with the stock photo in the modal
+    if(!d._capturedPhotoURL){
+      const img=document.createElement('img');
+      img.className='aircraft-photo';
+      img.src=photo.src;
+      img.alt=d.callsign;
+      img.onerror=()=>{ if(photoPlaceholder.isConnected) photoPlaceholder.textContent='No photo available'; };
+      img.onload=()=>{
+        if(!photoPlaceholder.isConnected)return;
+        photoPlaceholder.replaceWith(img);
+        const credit=document.createElement('div');
+        credit.className='photo-credit';
+        credit.textContent='Stock photo · '+photo.credit+' · Planespotters.net';
+        img.insertAdjacentElement('afterend',credit);
+      };
+    }
+  }).catch(()=>{
+    if(!d._capturedPhotoURL && photoPlaceholder.isConnected){
+      photoPlaceholder.textContent='No photo available';
+    }
+  });
+}
+
+function closeConfirmModal(){
+  document.getElementById('confirm-modal').classList.remove('open');
+  confirmPending=null;
+}
+
+/* ── NEARBY TAB ── */
+function renderNearbyTab(){
+  const view=document.getElementById('nearby-view');
+  const countEl=document.getElementById('nearby-count');
+  view.innerHTML='';
+
+  if(!gpsLocked){
+    view.innerHTML=`<div class="empty-state">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span>Waiting for GPS lock...</span></div>`;
+    countEl.textContent='—';
+    return;
+  }
+  if(!mapFlights.length){
+    view.innerHTML=`<div class="empty-state">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/></svg>
+      <span>No aircraft within 10mi right now.</span></div>`;
+    countEl.textContent='0';
+    return;
+  }
+
+  // Annotate each with distance + category for sorting
+  const annotated=mapFlights.map(ac=>{
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    const dist=distanceMi(userLat,userLon,flat,flon);
+    const alt=parseInt(ac.alt_baro)||0;
+    let cat='high';
+    if(ac._grounded){
+      cat = dist<=GROUND_CATCH_RADIUS_MI ? 'catchable' : 'grounded';
+    } else if(alt<=getMaxAltFt() && dist<=getCatchRadiusMi()){
+      cat='catchable';
+    }
+    return{ac,dist,alt,cat};
+  });
+
+  // Sort: catchable first, then by distance ascending
+  const order={catchable:0,high:1,grounded:2};
+  annotated.sort((a,b)=>{
+    if(order[a.cat]!==order[b.cat])return order[a.cat]-order[b.cat];
+    return a.dist-b.dist;
+  });
+
+  countEl.textContent=annotated.length;
+
+  annotated.forEach(({ac,dist,alt,cat})=>{
+    const card=document.createElement('div');
+    card.className='nearby-card '+cat;
+    const callsign=(ac.flight||ac.r||'UNKNOWN').trim();
+    const type=ac.t||'—';
+    const reg=ac.r||'—';
+    const operator=ac.ownOp||ac.op||'';
+    const spd=ac.gs?Math.round(parseFloat(ac.gs))+' kt':'';
+    const altStr = ac._grounded ? 'GND' : (alt?alt.toLocaleString()+'ft':'—');
+    const metaParts=[type,reg,operator].filter(v=>v&&v!=='—');
+
+    card.innerHTML=`
+      <div class="nearby-icon ${cat}">${aircraftIconSVG(ac, cat)}</div>
+      <div class="nearby-info">
+        <div class="nearby-callsign">${callsign}</div>
+        <div class="nearby-meta">${metaParts.join(' · ')||'No metadata'}</div>
+      </div>
+      <div class="nearby-stats">
+        <strong>${altStr}</strong><br>
+        ${dist.toFixed(1)} mi${spd?' · '+spd:''}
+      </div>
+    `;
+    view.appendChild(card);
+  });
+}
+
+// Plane icon SVG for nearby cards (matches map style)
+function planeIconSVG(cat, headingDeg){
+  const color = cat==='catchable' ? '#4ade80' : cat==='grounded' ? '#888' : '#facc15';
+  return `<svg width="22" height="22" viewBox="0 0 24 24" style="transform:rotate(${headingDeg}deg)">
+    <path d="M12 2 L13.5 11 L22 13 L22 15 L13.5 14 L13 19 L15 20 L15 21.5 L12 20.5 L9 21.5 L9 20 L11 19 L10.5 14 L2 15 L2 13 L10.5 11 Z" fill="${color}"/>
+  </svg>`;
+}
+
+// Helicopter icon SVG — rotor disk + body + blades. Heading is ambiguous from top-down
+// so we don't rotate this icon.
+function heliIconSVG(cat){
+  const color = cat==='catchable' ? '#4ade80' : cat==='grounded' ? '#888' : '#facc15';
+  return `<svg width="22" height="22" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" stroke="${color}" stroke-width="1.6" fill="none"/>
+    <line x1="3" y1="12" x2="21" y2="12" stroke="${color}" stroke-width="1.2"/>
+    <line x1="12" y1="3" x2="12" y2="21" stroke="${color}" stroke-width="1.2"/>
+    <circle cx="12" cy="12" r="2.5" fill="${color}"/>
+  </svg>`;
+}
+
+function aircraftIconSVG(ac, cat){
+  return isHelicopter(ac.t) ? heliIconSVG(cat) : planeIconSVG(cat, parseFloat(ac.track)||0);
+}
+
+/* ── SKY MAP ── */
+let mapAnimId=null;
+let leafletMap=null;
+let leafletInitialized=false;
+const mapCanvas=document.getElementById('map-canvas');
+const mapCtx=mapCanvas.getContext('2d');
+const mapEmpty=document.getElementById('map-empty');
+
+function initLeaflet(){
+  if(leafletInitialized||typeof L==='undefined'||userLat===null)return;
+  leafletInitialized=true;
+  leafletMap=L.map('leaflet-map',{
+    center:[userLat,userLon],
+    zoom:12,
+    minZoom:11,           // ~prevent zooming out past ~10mi view
+    maxZoom:17,           // ~street level, fine enough for spotting
+    zoomControl:false,
+    attributionControl:true,
+    dragging:false,       // pan stays locked to GPS
+    scrollWheelZoom:false,
+    doubleClickZoom:false, // double-tap zoom is killed; pinch only
+    touchZoom:true,       // pinch-zoom
+    boxZoom:false,
+    keyboard:false,
+    tap:false,
+    bounceAtZoomLimits:true
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    attribution:'© OpenStreetMap, © CARTO',
+    subdomains:'abcd',
+    maxZoom:19
+  }).addTo(leafletMap);
+  // Re-center on user whenever zoom finishes, so a pinch can't drift the view away
+  leafletMap.on('zoomend',()=>{
+    if(userLat!==null)leafletMap.setView([userLat,userLon],leafletMap.getZoom(),{animate:false});
+  });
+  fitMapToRadius();
+}
+
+function fitMapToRadius(){
+  if(!leafletMap||userLat===null)return;
+  // 10mi ≈ 16.1 km. Build a bounding box and fit it.
+  const dLat=10/69; // ~69mi per degree latitude
+  const dLon=10/(69*Math.cos(userLat*Math.PI/180));
+  const bounds=L.latLngBounds(
+    [userLat-dLat,userLon-dLon],
+    [userLat+dLat,userLon+dLon]
+  );
+  leafletMap.fitBounds(bounds,{animate:false,padding:[10,10]});
+}
+
+function startMapDraw(){
+  if(mapAnimId)cancelAnimationFrame(mapAnimId);
+  // Init Leaflet if GPS is ready and we haven't yet
+  if(!leafletInitialized&&gpsLocked){
+    setTimeout(initLeaflet,50); // let tab become visible first so dimensions are real
+  }
+  drawMap();
+}
+
+function resizeMapCanvas(){
+  const wrap=mapCanvas.parentElement;
+  const dpr=window.devicePixelRatio||1;
+  const w=wrap.offsetWidth, h=wrap.offsetHeight;
+  mapCanvas.width=w*dpr;
+  mapCanvas.height=h*dpr;
+  mapCanvas.style.width=w+'px';
+  mapCanvas.style.height=h+'px';
+  mapCtx.setTransform(dpr,0,0,dpr,0,0);
+  return{w,h};
+}
+
+function drawMap(){
+  const tabVisible=document.getElementById('tab-map').classList.contains('active');
+  if(!tabVisible){mapAnimId=null;return;}
+
+  const{w,h}=resizeMapCanvas();
+  mapCtx.clearRect(0,0,w,h);
+
+  if(!gpsLocked||userLat===null){
+    mapEmpty.style.display='flex';
+    mapEmpty.textContent='Waiting for GPS lock...';
+    mapAnimId=requestAnimationFrame(drawMap);
+    return;
+  }
+  mapEmpty.style.display='none';
+
+  // Lazy init Leaflet once GPS is known
+  if(!leafletInitialized){initLeaflet();}
+  // Note: we no longer setView every frame — the zoomend handler keeps us centered
+  // after pinch-zoom, and GPS updates trigger a recenter explicitly elsewhere.
+
+  // Convert geo coords to canvas pixels using Leaflet's projection
+  function geoToPixel(lat,lon){
+    if(!leafletMap)return null;
+    const pt=leafletMap.latLngToContainerPoint([lat,lon]);
+    return{x:pt.x,y:pt.y};
+  }
+
+  const userPx=geoToPixel(userLat,userLon);
+  if(!userPx){mapAnimId=requestAnimationFrame(drawMap);return;}
+
+  const cx=userPx.x, cy=userPx.y;
+
+  // 5mi catch ring + 10mi outer, in pixel terms via projection
+  const r5Px=geoToPixel(userLat+(5/69),userLon);
+  const r10Px=geoToPixel(userLat+(10/69),userLon);
+  const r5=Math.abs(r5Px.y-cy);
+  const r10=Math.abs(r10Px.y-cy);
+
+  // Outer ring
+  mapCtx.beginPath();
+  mapCtx.arc(cx,cy,r10,0,Math.PI*2);
+  mapCtx.strokeStyle='rgba(255,255,255,0.15)';
+  mapCtx.lineWidth=1;
+  mapCtx.stroke();
+
+  // 5mi catch ring
+  mapCtx.beginPath();
+  mapCtx.arc(cx,cy,r5,0,Math.PI*2);
+  mapCtx.strokeStyle='rgba(74,222,128,0.35)';
+  mapCtx.setLineDash([5,5]);
+  mapCtx.lineWidth=1.2;
+  mapCtx.stroke();
+  mapCtx.setLineDash([]);
+
+  // Range labels
+  mapCtx.fillStyle='rgba(255,255,255,0.5)';
+  mapCtx.font='9px -apple-system,sans-serif';
+  mapCtx.textAlign='left';
+  mapCtx.fillText('5mi',cx+r5+4,cy-2);
+  mapCtx.fillText('10mi',cx+r10-26,cy-2);
+
+  // User dot
+  mapCtx.beginPath();
+  mapCtx.arc(cx,cy,6,0,Math.PI*2);
+  mapCtx.fillStyle='rgba(96,165,250,1)';
+  mapCtx.fill();
+  mapCtx.strokeStyle='#fff';
+  mapCtx.lineWidth=1.5;
+  mapCtx.stroke();
+
+  // Heading indicator (small triangle, points the way user faces, north-up)
+  if(compassEnabled){
+    mapCtx.save();
+    mapCtx.translate(cx,cy);
+    mapCtx.rotate(deviceHeading*Math.PI/180);
+    mapCtx.beginPath();
+    mapCtx.moveTo(0,-14);
+    mapCtx.lineTo(-5,-7);
+    mapCtx.lineTo(5,-7);
+    mapCtx.closePath();
+    mapCtx.fillStyle='rgba(96,165,250,0.95)';
+    mapCtx.fill();
+    mapCtx.restore();
+  }
+
+  // Helper: draw an airplane silhouette at (cx,cy), rotated by headingDeg, sized by 'size'
+  function drawPlane(cx,cy,headingDeg,size,fillStyle,strokeStyle){
+    mapCtx.save();
+    mapCtx.translate(cx,cy);
+    mapCtx.rotate(headingDeg*Math.PI/180);
+    const s=size/24; // path designed in a 24px viewBox, scale to size
+    mapCtx.scale(s,s);
+    // Airplane outline pointing "up" (negative Y)
+    mapCtx.beginPath();
+    mapCtx.moveTo(0,-11);          // nose
+    mapCtx.lineTo(1.5,-2);
+    mapCtx.lineTo(11,2);           // right wing tip
+    mapCtx.lineTo(11,4);
+    mapCtx.lineTo(1.5,3);
+    mapCtx.lineTo(1,8);
+    mapCtx.lineTo(4,10);           // right tail tip
+    mapCtx.lineTo(4,11);
+    mapCtx.lineTo(0,10);
+    mapCtx.lineTo(-4,11);
+    mapCtx.lineTo(-4,10);
+    mapCtx.lineTo(-1,8);           // left tail
+    mapCtx.lineTo(-1.5,3);
+    mapCtx.lineTo(-11,4);
+    mapCtx.lineTo(-11,2);          // left wing tip
+    mapCtx.lineTo(-1.5,-2);
+    mapCtx.closePath();
+    mapCtx.fillStyle=fillStyle;
+    mapCtx.fill();
+    if(strokeStyle){
+      mapCtx.strokeStyle=strokeStyle;
+      mapCtx.lineWidth=0.8;
+      mapCtx.stroke();
+    }
+    mapCtx.restore();
+  }
+
+  // Helicopter glyph: rotor disk (thin ring) + central body + tail boom with tail rotor.
+  // Designed in 24px viewBox like the plane; scaled to 'size'.
+  function drawHeli(cx,cy,headingDeg,size,fillStyle,strokeStyle){
+    mapCtx.save();
+    mapCtx.translate(cx,cy);
+    mapCtx.rotate(headingDeg*Math.PI/180);
+    const s=size/24;
+    mapCtx.scale(s,s);
+    // Rotor disk (ring)
+    mapCtx.beginPath();
+    mapCtx.arc(0,0,10,0,Math.PI*2);
+    mapCtx.strokeStyle=fillStyle;
+    mapCtx.lineWidth=1.6;
+    mapCtx.stroke();
+    // Rotor blades (cross through the center)
+    mapCtx.beginPath();
+    mapCtx.moveTo(-10,0); mapCtx.lineTo(10,0);
+    mapCtx.moveTo(0,-10); mapCtx.lineTo(0,10);
+    mapCtx.strokeStyle=fillStyle;
+    mapCtx.lineWidth=1.2;
+    mapCtx.stroke();
+    // Central body (small solid circle)
+    mapCtx.beginPath();
+    mapCtx.arc(0,0,3,0,Math.PI*2);
+    mapCtx.fillStyle=fillStyle;
+    mapCtx.fill();
+    if(strokeStyle){
+      mapCtx.strokeStyle=strokeStyle;
+      mapCtx.lineWidth=0.6;
+      mapCtx.stroke();
+    }
+    mapCtx.restore();
+  }
+
+
+  // Aircraft
+  mapFlights.forEach(ac=>{
+    const flat=parseFloat(ac.lat),flon=parseFloat(ac.lon);
+    if(isNaN(flat)||isNaN(flon))return;
+    const px=geoToPixel(flat,flon);
+    if(!px)return;
+    const dist=distanceMi(userLat,userLon,flat,flon);
+    const alt=parseInt(ac.alt_baro)||0;
+    const grounded=ac._grounded;
+    const catchable = grounded
+      ? dist<=GROUND_CATCH_RADIUS_MI
+      : (alt<=getMaxAltFt() && dist<=getCatchRadiusMi());
+    const trk=parseFloat(ac.track);
+    const heading=isNaN(trk)?0:trk;
+
+    const tintOn = Prefs.get('altTint');
+    let fill, stroke=null, size;
+    if(grounded){
+      fill = catchable ? 'rgba(200,200,200,0.95)' : 'rgba(140,140,140,0.6)';
+      size = 18;
+    } else if(catchable){
+      // Catchable altitude band: 0 → 10,000ft. Lower = more saturated/brighter green.
+      // Map alt to a 0..1 "highness" factor: 0 = on the deck, 1 = 10k ceiling.
+      // Note: gradient uses the literal 10k constant so colors stay consistent regardless
+      // of the user's max-alt preference. Catchability respects the pref; color is for legibility.
+      const h = tintOn ? Math.max(0, Math.min(1, alt/MAX_ALT_FT)) : 0;
+      // Bright green at low alt fades toward yellow-green at the ceiling — readable at a glance.
+      // Low: rgb(74,222,128). High end: rgb(180,220,90).
+      const r = Math.round(74  + (180-74)*h);
+      const g = Math.round(222 + (220-222)*h);
+      const b = Math.round(128 + (90-128)*h);
+      fill = `rgba(${r},${g},${b},0.95)`;
+      stroke = 'rgba(255,255,255,0.7)';
+      // Slightly larger at low altitude — visually emphasizes "look up, it's close"
+      size = 22 + Math.round(4*(1-h));
+    } else {
+      // Non-catchable airborne: above pref OR outside radius. Use the altitude band 10k→20k for tint.
+      const h = tintOn ? Math.max(0, Math.min(1, (alt-MAX_ALT_FT)/(MAP_MAX_ALT_FT-MAX_ALT_FT))) : 0;
+      // Low end (just above 10k): bright yellow. High end (~20k): faded orange.
+      const r = Math.round(250 + (220-250)*h);
+      const g = Math.round(204 + (140-204)*h);
+      const b = Math.round(21  + (40-21)*h);
+      fill = `rgba(${r},${g},${b},${0.75 - h*0.2})`;
+      size = 18;
+    }
+    const heli = isHelicopter(ac.t);
+    if(heli){
+      // Helicopters don't get visual rotation on the disk view — orientation
+      // is ambiguous from top-down and the disk reads better static.
+      drawHeli(px.x, px.y, 0, size, fill, stroke);
+    } else {
+      drawPlane(px.x, px.y, grounded?0:heading, size, fill, stroke);
+    }
+
+    if(catchable){
+      const label=(ac.flight||ac.r||'').trim().substring(0,7);
+      if(label){
+        mapCtx.font='600 10px -apple-system,sans-serif';
+        mapCtx.fillStyle='rgba(255,255,255,0.9)';
+        mapCtx.strokeStyle='rgba(0,0,0,0.75)';
+        mapCtx.lineWidth=2.5;
+        mapCtx.textAlign='center';
+        mapCtx.textBaseline='alphabetic';
+        mapCtx.strokeText(label,px.x,px.y-size/2-3);
+        mapCtx.fillText(label,px.x,px.y-size/2-3);
+      }
+    }
+  });
+
+  if(mapFlights.length===0&&leafletInitialized){
+    mapEmpty.style.display='flex';
+    mapEmpty.textContent='No aircraft within 10mi right now.';
+  }
+
+  mapAnimId=requestAnimationFrame(drawMap);
+}
+
+/* ── LOG TAB ── */
+function renderReferencePhoto(wrap, src, credit){
+  if(!wrap||!src)return;
+  const label=document.createElement('div');
+  label.className='log-ref-label';
+  label.textContent='REFERENCE PHOTO';
+  const img=document.createElement('img');
+  img.className='log-ref-photo';
+  img.src=src;
+  img.alt='Reference';
+  img.loading='lazy';
+  const creditEl=document.createElement('div');
+  creditEl.className='log-ref-credit';
+  creditEl.textContent = credit ? 'Stock photo · '+credit+' · Planespotters.net' : 'Stock photo · Planespotters.net';
+  img.onerror=()=>{ wrap.style.display='none'; };
+  wrap.appendChild(label);
+  wrap.appendChild(img);
+  wrap.appendChild(creditEl);
+}
+
+function buildLogLinks(c){
+  const links=[];
+  // Use full type name in the Wikipedia search if we have it
+  if(c.type&&c.type!=='—'){
+    const fullName = c.typeName || fullAircraftName(c.type);
+    const searchTerm = fullName || c.type;
+    const label = fullName || ('Type: '+c.type);
+    const q=encodeURIComponent(searchTerm);
+    links.push(`<a class="log-link" href="https://en.wikipedia.org/wiki/Special:Search?search=${q}" target="_blank" rel="noopener">${label}</a>`);
+  }
+  if(c.operator&&c.operator!=='—'){
+    const q=encodeURIComponent(c.operator);
+    links.push(`<a class="log-link" href="https://en.wikipedia.org/wiki/Special:Search?search=${q}" target="_blank" rel="noopener">${c.operator}</a>`);
+  }
+  if(c.reg&&c.reg!=='—'){
+    const q=encodeURIComponent(c.reg);
+    links.push(`<a class="log-link" href="https://www.planespotters.net/search?q=${q}" target="_blank" rel="noopener">Planespotters</a>`);
+    links.push(`<a class="log-link" href="https://www.jetphotos.com/photo/keyword/${q}" target="_blank" rel="noopener">JetPhotos</a>`);
+  }
+  if(c.callsign&&c.callsign!=='UNKNOWN'&&c.callsign!=='—'){
+    const q=encodeURIComponent(c.callsign);
+    links.push(`<a class="log-link" href="https://flightaware.com/live/flight/${q}" target="_blank" rel="noopener">FlightAware</a>`);
+  }
+  if(c.icao&&c.icao!=='—'){
+    links.push(`<a class="log-link" href="https://globe.adsbexchange.com/?icao=${encodeURIComponent(c.icao.toLowerCase())}" target="_blank" rel="noopener">Track live</a>`);
+  }
+  // Airport links if origin/dest exist
+  if(c.origin&&c.origin!=='—'){
+    const q=encodeURIComponent(c.origin);
+    links.push(`<a class="log-link" href="https://en.wikipedia.org/wiki/${q}" target="_blank" rel="noopener">From: ${c.origin}</a>`);
+  }
+  if(c.dest&&c.dest!=='—'){
+    const q=encodeURIComponent(c.dest);
+    links.push(`<a class="log-link" href="https://en.wikipedia.org/wiki/${q}" target="_blank" rel="noopener">To: ${c.dest}</a>`);
+  }
+  return links.join('');
+}
+
+function renderLogTab(){
+  const view=document.getElementById('log-view');
+  view.innerHTML='';
+  const catches=loadCatches();
+  if(!catches.length){
+    view.innerHTML=`<div class="empty-state">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+      </svg><span>No tallies yet.</span></div>`;
+    return;
+  }
+  if(window._logPhotoURLs){window._logPhotoURLs.forEach(u=>URL.revokeObjectURL(u));}
+  window._logPhotoURLs=[];
+
+  // Pre-compute type counts (catches by type) for "first-seen" and counter display.
+  // We iterate in chronological order and tag each catch with its nth-occurrence of that type.
+  const typeCounts={};
+  const typeNthByIndex=new Array(catches.length).fill(1);
+  for(let i=0;i<catches.length;i++){
+    const t=(catches[i].type||'').toUpperCase();
+    if(!t||t==='—'){typeNthByIndex[i]=null;continue;}
+    typeCounts[t]=(typeCounts[t]||0)+1;
+    typeNthByIndex[i]=typeCounts[t];
+  }
+  const totalByType={...typeCounts};
+
+  catches.slice().reverse().forEach((c,reverseIdx)=>{
+    const originalIdx = catches.length-1-reverseIdx;
+    const nthOfType = typeNthByIndex[originalIdx];
+    const totalOfType = c.type ? totalByType[(c.type||'').toUpperCase()] || 0 : 0;
+    const card=document.createElement('div');
+    card.className='log-card';
+
+    // Delete background (revealed by swipe)
+    const deleteBg=document.createElement('div');
+    deleteBg.className='log-card-delete';
+    deleteBg.innerHTML=`<div class="log-card-delete-inner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"></path>
+        <path d="M10 11v6"></path><path d="M14 11v6"></path>
+      </svg>
+      <span>DELETE</span>
+    </div>`;
+    card.appendChild(deleteBg);
+
+    // Swipe layer holds all the visible content
+    const swipe=document.createElement('div');
+    swipe.className='log-card-swipe';
+
+    const conf=c.confidence||'low';
+    const cTypeForMeta = (c.typeName || fullAircraftName(c.type)) || c.type;
+    const meta=[cTypeForMeta,c.reg,c.operator].filter(v=>v&&v!=='—').join(' · ')||'No data';
+    const route=(c.origin!=='—'||c.dest!=='—')
+      ?(c.origin!=='—'?c.origin:'?')+' → '+(c.dest!=='—'?c.dest:'?'):'';
+
+    if(c.hasCapturedPhoto&&c.catchId){
+      const img=document.createElement('img');
+      img.className='log-thumb';
+      img.alt=c.callsign;
+      swipe.appendChild(img);
+      PhotoStore.get(c.catchId).then(blob=>{
+        if(blob){
+          const u=PhotoStore.toObjectURL(blob);
+          window._logPhotoURLs.push(u);
+          img.src=u;
+        } else if(c.photoSrc){
+          img.src=c.photoSrc;
+        } else {
+          img.remove();
+        }
+      }).catch(()=>{
+        if(c.photoSrc)img.src=c.photoSrc;
+        else img.remove();
+      });
+    } else if(c.photoSrc){
+      const img=document.createElement('img');
+      img.className='log-thumb';
+      img.src=c.photoSrc;
+      img.alt=c.callsign;
+      swipe.appendChild(img);
+    }
+
+    const body=document.createElement('div');
+    body.className='log-body';
+    // Backwards compat: derive military status for legacy catches that pre-date the mil fields
+    const cIsMil = (c.isMil !== undefined)
+      ? c.isMil
+      : (c.type && CAT_MIL.has((c.type||'').toUpperCase()));
+    const cMilAirframeOnly = c.milAirframeOnly === true;
+    const milPillSm = cIsMil
+      ? `<span class="mil-pill${cMilAirframeOnly?' airframe-only':''}">${cMilAirframeOnly?'MIL AF':'MIL'}</span>`
+      : '';
+    body.innerHTML=`
+      <div class="log-card-header">
+        <span class="log-callsign">${c.callsign}</span>
+        <span class="log-time">${c.date} · ${c.time}</span>
+      </div>
+      <div class="log-meta">
+        <span class="conf-pill ${conf}">${conf.toUpperCase()}</span>
+        ${milPillSm}
+        <span>${meta}</span>
+        ${route?'<span>'+route+'</span>':''}
+        ${c.alt&&c.alt!=='—'?'<span>'+c.alt+'</span>':''}
+      </div>`;
+    swipe.appendChild(body);
+
+    const expand=document.createElement('div');
+    expand.className='log-expand';
+    const cTypeName = c.typeName || fullAircraftName(c.type);
+    const cTypeLine = cTypeName ? cTypeName + (c.type&&c.type!=='—'?' ('+c.type+')':'') : (c.type||'—');
+    const cOriginLine = (c.origin&&c.origin!=='—')
+      ? (c.origin_name ? c.origin+' · '+c.origin_name : c.origin) : '—';
+    const cDestLine = (c.dest&&c.dest!=='—')
+      ? (c.dest_name ? c.dest+' · '+c.dest_name : c.dest) : '—';
+    // Backwards compat: older catches may not have category/country/etc
+    const cCategory = c.category || aircraftCategory(c.type) || '—';
+    const cCountry  = c.country || countryFromReg(c.reg) || '—';
+    const cBuilt    = c.built_year ? (c.built_year + (c.age!=null?' · '+c.age+' yrs old' : '')) : '—';
+    const cDistance = (c.distanceAtCatch!=null) ? c.distanceAtCatch.toFixed(1)+' mi'+(c.bearingAtCatch!=null?' · '+c.bearingAtCatch+'°':'') : '—';
+    const firstSeenBadge = (nthOfType===1 && totalOfType===1) ? ' <span class="first-badge">FIRST</span>'
+                         : (nthOfType===1) ? ' <span class="first-badge">FIRST</span>'
+                         : '';
+    const typeCounterRow = (c.type && c.type!=='—' && totalOfType>0)
+      ? `<div class="card-row"><span class="card-label">Type count</span><span class="card-value">${nthOfType} of ${totalOfType} ${cTypeName||c.type} caught${firstSeenBadge}</span></div>`
+      : '';
+    // Military branch row — only shown when military
+    const cBranch = cIsMil ? (c.milBranch || (cMilAirframeOnly ? 'Military airframe' : 'Military')) : null;
+    const branchRow = cBranch
+      ? `<div class="card-row"><span class="card-label">Branch</span><span class="card-value">${cBranch}</span></div>`
+      : '';
+    expand.innerHTML=`
+      <div class="card-row"><span class="card-label">Aircraft type</span><span class="card-value">${cTypeLine}</span></div>
+      <div class="card-row"><span class="card-label">Category</span><span class="card-value">${cCategory}</span></div>
+      ${branchRow}
+      ${typeCounterRow}
+      <div class="card-row"><span class="card-label">Registration</span><span class="card-value">${c.reg||'—'}</span></div>
+      <div class="card-row"><span class="card-label">Country</span><span class="card-value">${cCountry}</span></div>
+      <div class="card-row"><span class="card-label">Built</span><span class="card-value">${cBuilt}</span></div>
+      <div class="card-row"><span class="card-label">Operator</span><span class="card-value">${c.operator||'—'}</span></div>
+      <div class="card-row"><span class="card-label">Origin</span><span class="card-value">${cOriginLine}</span></div>
+      <div class="card-row"><span class="card-label">Destination</span><span class="card-value">${cDestLine}</span></div>
+      <div class="card-row"><span class="card-label">Altitude</span><span class="card-value">${c.alt||'—'}</span></div>
+      <div class="card-row"><span class="card-label">Speed</span><span class="card-value">${c.spd||'—'}</span></div>
+      <div class="card-row"><span class="card-label">Heading</span><span class="card-value">${c.heading||'—'}</span></div>
+      <div class="card-row"><span class="card-label">Distance at catch</span><span class="card-value">${cDistance}</span></div>
+      <div class="card-row"><span class="card-label">Squawk</span><span class="card-value">${c.squawk||'—'}</span></div>
+      <div class="card-row"><span class="card-label">ICAO 24</span><span class="card-value">${c.icao||'—'}</span></div>
+      <div class="log-links">${buildLogLinks(c)}</div>
+      <div class="log-reference-photo-wrap"></div>
+    `;
+    // Render reference photo lazily: prefer stock blob from IndexedDB, fall back to URL
+    const refWrap=expand.querySelector('.log-reference-photo-wrap');
+    if(c.hasStockBlob && c.catchId){
+      PhotoStore.get(c.catchId+'_stock').then(blob=>{
+        if(blob){
+          const u=PhotoStore.toObjectURL(blob);
+          window._logPhotoURLs.push(u);
+          renderReferencePhoto(refWrap, u, c.photoCredit);
+        } else if(c.photoSrc){
+          renderReferencePhoto(refWrap, c.photoSrc, c.photoCredit);
+        }
+      }).catch(()=>{
+        if(c.photoSrc)renderReferencePhoto(refWrap, c.photoSrc, c.photoCredit);
+      });
+    } else if(c.photoSrc){
+      renderReferencePhoto(refWrap, c.photoSrc, c.photoCredit);
+    }
+    swipe.appendChild(expand);
+    card.appendChild(swipe);
+
+    attachSwipeAndTap(card, swipe, originalIdx);
+    view.appendChild(card);
+  });
+
+  const clearBtn=document.createElement('button');
+  clearBtn.id='log-clear-btn';
+  clearBtn.textContent='Clear all tallies';
+  clearBtn.onclick=()=>{
+    if(confirm('Clear all tallies and photos? Cannot be undone.')){
+      localStorage.removeItem('spotter_catches');
+      PhotoStore.clear().catch(()=>{});
+      updateBadges();renderLogTab();
+    }
+  };
+  view.appendChild(clearBtn);
+}
+
+/* ── Swipe + tap handling for log cards ──
+   - Horizontal drag past threshold → reveal delete; release past 60px → confirms delete.
+   - Tap (no significant movement) → toggle expand.
+   - Vertical movement → let the page scroll; we don't fight it.
+   - One card open at a time: opening a swipe on a new card closes others.
+*/
+let _activeSwipe=null; // currently-open swipe element
+function closeActiveSwipe(){
+  if(_activeSwipe){
+    _activeSwipe.style.transform='';
+    _activeSwipe=null;
+  }
+}
+
+function attachSwipeAndTap(cardEl, swipeEl, originalIdx){
+  let startX=0, startY=0, dx=0, dy=0;
+  let dragging=false, decided=false, axis=null;
+  const DELETE_THRESHOLD=60;        // px to "open" the delete drawer
+  const COMMIT_THRESHOLD=140;       // px past which a release commits delete
+  const TAP_SLOP=6;                 // px of movement still counts as a tap
+  let openOffset=0;                 // current resting offset for this card (0 or -80)
+
+  function setX(x){ swipeEl.style.transform = x ? `translateX(${x}px)` : ''; }
+
+  swipeEl.addEventListener('touchstart',(e)=>{
+    if(e.touches.length>1)return;
+    const t=e.touches[0];
+    startX=t.clientX; startY=t.clientY; dx=0; dy=0;
+    dragging=true; decided=false; axis=null;
+    swipeEl.classList.add('dragging');
+  },{passive:true});
+
+  swipeEl.addEventListener('touchmove',(e)=>{
+    if(!dragging)return;
+    const t=e.touches[0];
+    dx=t.clientX-startX; dy=t.clientY-startY;
+    if(!decided){
+      // Decide axis on first meaningful movement
+      if(Math.abs(dx)>TAP_SLOP||Math.abs(dy)>TAP_SLOP){
+        axis = Math.abs(dx)>Math.abs(dy) ? 'x' : 'y';
+        decided=true;
+        if(axis==='x' && _activeSwipe && _activeSwipe!==swipeEl){
+          closeActiveSwipe();
+        }
+      }
+    }
+    if(axis==='x'){
+      // Only allow leftward drag (negative x). If card is already open, allow rightward to close.
+      let x = openOffset + dx;
+      if(x>0)x=0;
+      if(x<-160)x=-160; // hard limit so it can't fly off
+      setX(x);
+      // Prevent vertical scroll from interfering while we're swiping horizontally
+      if(e.cancelable)e.preventDefault();
+    }
+  },{passive:false});
+
+  swipeEl.addEventListener('touchend',()=>{
+    if(!dragging)return;
+    dragging=false;
+    swipeEl.classList.remove('dragging');
+    const moved=Math.abs(dx)+Math.abs(dy);
+    if(axis!=='x' && moved<TAP_SLOP){
+      // Treat as tap → toggle expand (unless tap was on a link)
+      // We let the click event do the actual toggle to avoid double-handling.
+      return;
+    }
+    if(axis==='x'){
+      const finalX = openOffset + dx;
+      if(finalX <= -COMMIT_THRESHOLD){
+        // Commit delete
+        setX(-cardEl.offsetWidth);
+        setTimeout(()=>{
+          const current=loadCatches();
+          const removed=current.splice(originalIdx,1)[0];
+          saveCatches(current);
+          if(removed&&removed.catchId){PhotoStore.del(removed.catchId).catch(()=>{});PhotoStore.del(removed.catchId+"_stock").catch(()=>{});}
+          updateBadges();
+          renderLogTab();
+        },180);
+        return;
+      }
+      if(finalX <= -DELETE_THRESHOLD){
+        // Snap open
+        openOffset=-80;
+        setX(openOffset);
+        _activeSwipe=swipeEl;
+      } else {
+        // Snap closed
+        openOffset=0;
+        setX(0);
+        if(_activeSwipe===swipeEl)_activeSwipe=null;
+      }
+    }
+  });
+
+  // Tap to expand / close-swipe-on-other-card
+  cardEl.addEventListener('click',(e)=>{
+    // Ignore taps inside links/buttons
+    if(e.target.closest('a, button'))return;
+    // If any swipe is open, tapping anywhere closes it without toggling expand
+    if(_activeSwipe){
+      closeActiveSwipe();
+      return;
+    }
+    cardEl.classList.toggle('expanded');
+    // No auto-scroll: the parent log-view already has enough bottom padding
+    // to keep expanded content reachable. Auto-scroll on iOS Safari has been
+    // unreliable and over-scrolled past the card; user-driven scroll is honest.
+  });
+
+  // Tap the revealed DELETE area to confirm-delete
+  cardEl.querySelector('.log-card-delete').addEventListener('click',(e)=>{
+    e.stopPropagation();
+    if(!confirm('Delete this tally? Cannot be undone.')){
+      // user backed out — close the swipe
+      openOffset=0;
+      setX(0);
+      _activeSwipe=null;
+      return;
+    }
+    const current=loadCatches();
+    const removed=current.splice(originalIdx,1)[0];
+    saveCatches(current);
+    if(removed&&removed.catchId){PhotoStore.del(removed.catchId).catch(()=>{});PhotoStore.del(removed.catchId+"_stock").catch(()=>{});}
+    updateBadges();
+    renderLogTab();
+  });
+}
+
+/* ── Block iOS page-level pinch & double-tap zoom (Safari ignores viewport user-scalable=no) ──
+   We let the Leaflet map keep its own pinch behavior. */
+function isInLeaflet(target){
+  return !!(target && target.closest && target.closest('#leaflet-map'));
+}
+// Pinch: Safari fires gesturestart/change/end for multi-finger pinches.
+document.addEventListener('gesturestart',(e)=>{
+  if(isInLeaflet(e.target))return;
+  e.preventDefault();
+});
+document.addEventListener('gesturechange',(e)=>{
+  if(isInLeaflet(e.target))return;
+  e.preventDefault();
+});
+document.addEventListener('gestureend',(e)=>{
+  if(isInLeaflet(e.target))return;
+  e.preventDefault();
+});
+// Belt + suspenders: also block any 2+ finger touch outside the map.
+document.addEventListener('touchstart',(e)=>{
+  if(e.touches.length>1 && !isInLeaflet(e.target)){
+    if(e.cancelable)e.preventDefault();
+  }
+},{passive:false});
+// Double-tap-zoom backup (touch-action: manipulation handles most of it).
+// On some iOS versions, taps on inputs/links can still trigger double-tap zoom — kill it.
+let _lastTouchEnd=0;
+document.addEventListener('touchend',(e)=>{
+  const now=Date.now();
+  if(now-_lastTouchEnd<=350 && !isInLeaflet(e.target)){
+    if(e.cancelable)e.preventDefault();
+  }
+  _lastTouchEnd=now;
+},{passive:false});
+
+window.addEventListener('resize',()=>{resizeCanvas();resizeMapCanvas();});
+
+/* ── One-time migration (V2.7): retroactively add full type names to existing catches.
+   Routes can't be backfilled (would require re-querying with stale callsigns),
+   but type lookup is offline and free. */
+(function migrateCatchesV27(){
+  try{
+    const flag='spotter_migrated_v27';
+    if(localStorage.getItem(flag))return;
+    const catches=loadCatches();
+    let changed=false;
+    for(const c of catches){
+      if(!c.typeName && c.type && c.type!=='—'){
+        const name=fullAircraftName(c.type);
+        if(name){c.typeName=name; changed=true;}
+      }
+    }
+    if(changed)saveCatches(catches);
+    localStorage.setItem(flag,'1');
+  }catch(e){}
+})();
+
+/* ── Apple touch icon: render the SVG to a PNG data URL at runtime ──
+   iOS Safari is much happier with PNG than SVG for the Home Screen icon.
+   We draw the icon onto a canvas, export as PNG, and rewrite the
+   <link rel="apple-touch-icon" href="..."> so the next install grabs the PNG.
+   The SVG href in <head> is the fallback for browsers that ignore this. */
+(function injectApplePNG(){
+  try{
+    const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+      <rect width="180" height="180" rx="40" fill="#0a0a0a"/>
+      <circle cx="90" cy="90" r="42" stroke="#ffffff" stroke-width="3" fill="none" opacity="0.95"/>
+      <line x1="90" y1="20" x2="90" y2="55" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="90" y1="125" x2="90" y2="160" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="20" y1="90" x2="55" y2="90" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="125" y1="90" x2="160" y2="90" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="90" cy="90" r="6" fill="#4ade80"/>
+    </svg>`;
+    const blob = new Blob([svgMarkup], {type:'image/svg+xml'});
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = ()=>{
+      const c = document.createElement('canvas');
+      c.width = 180; c.height = 180;
+      const cx = c.getContext('2d');
+      cx.drawImage(img, 0, 0, 180, 180);
+      const pngUrl = c.toDataURL('image/png');
+      const link = document.getElementById('apple-touch-icon');
+      if(link)link.setAttribute('href', pngUrl);
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = ()=>URL.revokeObjectURL(url);
+    img.src = url;
+  }catch(e){ /* fall back to SVG href already in head */ }
+})();
+
+updateBadges();
+</script>
+</body>
+</html>
